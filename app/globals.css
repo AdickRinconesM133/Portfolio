@@ -52,12 +52,12 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(2rem, 4.9dvw, 10rem);
+  font-size: clamp(4rem, 9dvw, 9rem);
   line-height: 0.9;
 }
 
 h3 {
-  font-size: clamp(1rem, 6dvw, 8rem);
+  font-size: clamp(2rem, 4.8dvw, 8rem);
   line-height: 0.9;
 }
 

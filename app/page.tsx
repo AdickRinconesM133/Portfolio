@@ -1,10 +1,11 @@
-import { Hero } from "./components";
+import { Hero, About, Work } from "./components";
 
 export default function Home() {
   return (
     <div>
       <Hero />
-      <section className="w-full h-dvh"></section>
+      <About />
+      <Work />
     </div>
   );
 }
