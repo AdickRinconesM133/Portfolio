@@ -24,15 +24,21 @@ export const Navigation = () => {
     }, [lastScrollY]);
 
     return (
-        <div className={`fixed w-[86.04dvw] margin-center margin-top z-100 transition-transform duration-500 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-[10dvh]'}`}>
+        <div className={`fixed top-[8.06dvh] left-[3.33dvw] w-[86.04dvw] z-100 transition-transform duration-500 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-[10dvh]'}`}>
             <div className='flex justify-between items-center'>
                 <Link href="/">
                     <p>CODE BY ADICK</p>
                 </Link>
                 <ul className='flex gap-[12.97dvw]'>
-                    <li>WORK</li>
-                    <li>ABOUT</li>
-                    <li>CONTACT ME</li>
+                    <li>
+                        <Link href="/work"><p>WORK</p></Link>
+                    </li>
+                    <li>
+                        <Link href="/about"><p>ABOUT</p></Link>
+                    </li>
+                    <li>
+                        <Link href="/contact"><p>CONTACT ME</p></Link>
+                    </li>
                 </ul>
             </div>
         </div>

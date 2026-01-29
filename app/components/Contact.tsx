@@ -1,15 +1,18 @@
 import { Card } from "./card";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Contact = () => {
     return (
-        <div className="flex w-full h-dvh overflow-hidden margin-top">
+        <div id="contact" className="flex w-full h-dvh overflow-hidden margin-top">
             <Card>
                 <div className="ml-[10.63dvw] mr-[30dvw]">
                     <h2 className="mt-[4dvh] text-[8rem]!">GOT A <span className="text-accent">PROJECT?</span></h2>
                     <p className="text-[0.8rem] mt-[4dvh]">TELL ME ABOUT YOUR VISION AND I'LL HELP YOU BRING IT TO LIFE.</p>
                     <div className="flex flex-wrap justify-start gap-x-[1.75dvw]">
-                        <p className="mt-[4dvh] text-[0.8rem]! border border-accent rounded-full px-[0.8vw] py-[0.8vh] w-fit">GET IN TOUCH</p>
+                        <Link href="/contact">
+                            <p className="mt-[4dvh] text-[0.8rem]! border border-accent rounded-full px-[0.8vw] py-[0.8vh] w-fit">GET IN TOUCH</p>
+                        </Link>
                         <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer">
                             <p className="mt-[4dvh] text-[0.8rem]! border border-accent rounded-full px-[0.8vw] py-[0.8vh] w-fit">CONNECT ON LINKEDIN</p>
                         </a>
