@@ -1,5 +1,5 @@
 interface CloudflareEnv {
-    PORTFOLIO: R2Bucket
+    portfolio: R2Bucket
 }
 
 declare global {

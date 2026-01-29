@@ -7,7 +7,7 @@ const IMAGE_EXTENSIONS = /\.(webp|jpg|jpeg|png|avif|gif)$/i
 const VIDEO_EXTENSIONS = /\.(mp4|webm|mov)$/i
 
 interface CloudflareEnv {
-    PORTFOLIO: any
+    portfolio: any
 }
 
 interface GalleryItem {
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
         }
 
         const { env } = context as unknown as { env: CloudflareEnv }
-        const bucket = env.PORTFOLIO
+        const bucket = env.portfolio
 
         if (!bucket) return NextResponse.json({ error: 'R2 bucket not bound' }, { status: 500 })
 

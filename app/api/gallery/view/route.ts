@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 export const runtime = 'edge'
 
 interface CloudflareEnv {
-    PORTFOLIO: any
+    portfolio: any
 }
 
 export async function GET(request: NextRequest) {
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
         }
 
         const { env } = context as unknown as { env: CloudflareEnv }
-        const bucket = env.PORTFOLIO
+        const bucket = env.portfolio
 
         if (!bucket) return new Response('R2 bucket not bound', { status: 500 })
 
