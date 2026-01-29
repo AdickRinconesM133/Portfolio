@@ -12,7 +12,7 @@ export const About = () => {
                     <p className="text-[0.8rem] mt-[4dvh]">Software Engineer specializing in Backend Development and Cloud Solutions. Focused on building robust, scalable systems that transform complex business needs into reliable, high-performance applications.</p>
                     <p className="mt-[4dvh] text-[0.8rem]! border border-accent rounded-full px-[0.8vw] py-[0.8vh] w-fit">LEARN MORE ABOUT ME</p>
                     <div className="flex flex-wrap justify-start gap-x-[1.75dvw] mt-[4dvh]">
-                        <button className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
+                        <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
                             <Image
                                 className="w-[2.2dvw] h-[2.2dvw] brightness-1000"
                                 src="/images/linkedin.svg"
@@ -20,8 +20,8 @@ export const About = () => {
                                 width={20}
                                 height={20}
                             />
-                        </button>
-                        <button className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
+                        </a>
+                        <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
                             <Image
                                 className="w-[2.2dvw] h-[2.2dvw] brightness-1000"
                                 src="/images/instagram.svg"
@@ -29,8 +29,8 @@ export const About = () => {
                                 width={20}
                                 height={20}
                             />
-                        </button>
-                        <button className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
+                        </a>
+                        <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
                             <Image
                                 className="w-[2.2dvw] h-[2.2dvw] brightness-1000"
                                 src="/images/github.svg"
@@ -38,7 +38,7 @@ export const About = () => {
                                 width={20}
                                 height={20}
                             />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </Card>
