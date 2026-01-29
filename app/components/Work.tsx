@@ -18,8 +18,7 @@ export const Work = () => {
                         number={work.number}
                         title={work.title}
                         title2={work.title2}
-                        width="93.34dvw"
-                        height="35dvh"
+                        className="w-[93.34dvw] h-[35dvh]"
                         image={work.techIcons}
                         techs={work.techNames}
                     />

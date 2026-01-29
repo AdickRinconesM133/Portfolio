@@ -29,7 +29,7 @@ export const Navigation = () => {
                 <Link href="/">
                     <p>CODE BY ADICK</p>
                 </Link>
-                <ul className='flex gap-[12.97dvw]'>
+                <ul className='flex gap-[12.97dvw] lg:gap-[8dvw] xl:gap-[12.97dvw]'>
                     <li>
                         <Link href="/work"><p>WORK</p></Link>
                     </li>

@@ -5,8 +5,8 @@ import Image from "next/image";
 export const About = () => {
     return (
         <div className="flex w-full h-dvh overflow-hidden">
-            <Card>
-                <div className="ml-[10.63dvw] mr-[30dvw]">
+            <Card className="h-auto min-h-[93.44dvh]">
+                <div className="ml-[10.63dvw] mr-[10dvw] xl:mr-[30dvw]">
                     <p className="text-accent text-xl">ABOUT ME</p>
                     <h2 className="mt-[4dvh]">ADICK <span className="text-accent">RINCONES</span></h2>
                     <p className="text-accent text-xl mt-[4dvh]">LET'S BUILD SOMETHING THAT MATTERS</p>
@@ -15,7 +15,7 @@ export const About = () => {
                         <p className="mt-[4dvh] text-[0.8rem]! border border-accent rounded-full px-[0.8vw] py-[0.8vh] w-fit">LEARN MORE ABOUT ME</p>
                     </Link>
                     <div className="flex flex-wrap justify-start gap-x-[1.75dvw] mt-[4dvh]">
-                        <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
+                        <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-foreground border">
                             <Image
                                 className="w-[2.2dvw] h-[2.2dvw] brightness-1000"
                                 src="/images/linkedin.svg"
@@ -24,7 +24,7 @@ export const About = () => {
                                 height={20}
                             />
                         </a>
-                        <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
+                        <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-foreground border">
                             <Image
                                 className="w-[2.2dvw] h-[2.2dvw] brightness-1000"
                                 src="/images/instagram.svg"
@@ -33,7 +33,7 @@ export const About = () => {
                                 height={20}
                             />
                         </a>
-                        <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
+                        <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-foreground border">
                             <Image
                                 className="w-[2.2dvw] h-[2.2dvw] brightness-1000"
                                 src="/images/github.svg"

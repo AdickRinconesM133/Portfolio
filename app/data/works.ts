@@ -1,3 +1,8 @@
+export interface GalleryItem {
+    type: 'image' | 'video'
+    url: string
+}
+
 export interface Work {
     slug: string
     title: string
@@ -10,7 +15,6 @@ export interface Work {
     role: string
     period: string
     services: string[]
-    images: string[]
     bgVideo: string
 }
 
@@ -26,7 +30,6 @@ export const works: Work[] = [
         techDescription: "Go, React, Python, MySQL, OpenAI API, CI/CD, Trello",
         role: "Full-Stack Developer",
         period: "2024-2025",
-        images: ["@/app/public/images/vamos-app.png"],
         services: ["FULL-STACK DEVELOPMENT", "AI INTEGRATION", "DATABASE MANAGEMENT", "CI/CD", "AGILE METHODOLOGIES"],
         bgVideo: "/images/Backgrounds/bgVamos.png"
     },
@@ -41,7 +44,6 @@ export const works: Work[] = [
         techDescription: "Next.js, Node.js, MongoDB, Git, ClickUp",
         role: "Full-Stack Developer",
         period: "2025",
-        images: ["/images/sae.png"],
         services: ["FULL-STACK DEVELOPMENT", "END-TO-END SYSTEM", "FINTECH AUTOMATION", "WORKFLOW OPTIMIZATION", "TEAM TRAINING"],
         bgVideo: "/images/Backgrounds/bgSae.png"
     },
@@ -57,7 +59,6 @@ export const works: Work[] = [
         role: "Gameplay Programmer",
         period: "2023-2024",
         services: ["GAMEPLAY MECHANICS", "AI LOGIC", "MULTIPLAYER NETWORK", "PYSICS SIMULATION", "SYSTEM OPTIMIZATION"],
-        images: ["/images/drip-gaming.png"],
         bgVideo: "/images/Backgrounds/bgDrip.png"
     }
 ]

@@ -16,7 +16,7 @@ export const WorkNext = ({ slug, number, title, title2, image, techs }: WorkNext
                 <h2 className="text-right mt-[4dvh]">UP <span className="text-accent">NEXT</span></h2>
             </div>
             <div className="margin-top margin-left flex flex-col gap-[4dvw]">
-                <WorkCard slug={slug} number={number} title={title} title2={title2} image={image} techs={techs} width="93.34dvw" height="35dvh" />
+                <WorkCard slug={slug} number={number} title={title} title2={title2} image={image} techs={techs} className="w-[93.34dvw] h-[35dvh]" />
             </div>
         </div>
     )

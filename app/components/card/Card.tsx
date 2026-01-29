@@ -1,16 +1,18 @@
-import React from "react"
+import { cn } from "@/app/lib/utils"
 
 interface CardProps {
     children: React.ReactNode;
-    width?: string;
-    height?: string;
+    className?: string;
 }
 
-export const Card = ({ children, width, height }: CardProps) => {
+export const Card = ({ children, className }: CardProps) => {
     return (
         <div
-            className="margin-left bg-background/40 rounded-[24px] flex flex-col justify-center"
-            style={{ width: width || "93.44dvw", height: height || "93.44dvh" }}
+            className={cn(
+                "margin-left bg-background/40 rounded-[24px] flex flex-col justify-center",
+                "w-[93.44dvw] h-[93.44dvh]",
+                className
+            )}
         >
             {children}
         </div>

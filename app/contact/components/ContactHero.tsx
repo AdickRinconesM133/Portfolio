@@ -93,8 +93,7 @@ export const ContactHero = () => {
       <div className="margin-top ml-[10.63dvw] flex gap-x-[4dvw]">
         <form
           onSubmit={handleSubmit}
-          className="bg-background/40 rounded-3xl flex flex-col justify-center gap-[4dvh] p-[3dvw]"
-          style={{ width: '40dvw' }}
+          className="bg-background/40 rounded-3xl flex flex-col justify-center gap-[4dvh] p-[3dvw] w-[40dvw]"
         >
           {CONTACT_FIELDS.map((field) => (
             <div key={field.name} className="flex items-start gap-[2dvw]">
@@ -136,8 +135,7 @@ export const ContactHero = () => {
           </button>
         </form>
         <div
-          className="bg-background/40 rounded-3xl flex flex-col p-[3dvw] self-start"
-          style={{ width: '37dvw' }}
+          className="bg-background/40 rounded-3xl flex flex-col p-[3dvw] self-start w-[37dvw]"
         >
           <p className="text-[0.9rem] text-accent mb-[2dvh]">CONTACT DETAILS</p>
           {CONTACT_DETAILS.map((detail) => (

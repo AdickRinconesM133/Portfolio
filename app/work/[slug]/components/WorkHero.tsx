@@ -16,9 +16,9 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
             <div className="margin-right mt-[32.5dvh] z-1">
                 <h1 className="text-right">{title}{title2 && ` ${title2}`}</h1>
                 <div className="flex flex-wrap justify-end gap-x-[1.88dvw] mt-[3dvh]">
-                    <TechCard image={techIcons[0]} title={techNames[0]} width="23dvw" height="23dvh" />
-                    <TechCard image={techIcons[1]} title={techNames[1]} width="23dvw" height="23dvh" />
-                    <TechCard image={techIcons[2]} title={techNames[2]} width="23dvw" height="23dvh" />
+                    <TechCard image={techIcons[0]} title={techNames[0]} />
+                    <TechCard image={techIcons[1]} title={techNames[1]} />
+                    <TechCard image={techIcons[2]} title={techNames[2]} />
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ export const Hero = () => {
                     <li className=" text-accent text-s text-right">DOCKER</li>
                 </ul>
                 <div className="flex flex-wrap justify-end gap-x-[1.75dvw]">
-                    <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-accent border">
+                    <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
                         <Image
                             className="w-[2.2dvw] h-[2.2dvw]"
                             src="/images/linkedin.svg"
@@ -26,7 +26,7 @@ export const Hero = () => {
                             height={20}
                         />
                     </a>
-                    <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-accent border">
+                    <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
                         <Image
                             className="w-[2.2dvw] h-[2.2dvw]"
                             src="/images/instagram.svg"
@@ -35,7 +35,7 @@ export const Hero = () => {
                             height={20}
                         />
                     </a>
-                    <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-accent border">
+                    <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
                         <Image
                             className="w-[2.2dvw] h-[2.2dvw]"
                             src="/images/github.svg"

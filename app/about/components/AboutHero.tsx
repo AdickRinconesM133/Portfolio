@@ -9,7 +9,7 @@ export const AboutHero = () => {
                 <p className="text-accent text-xl mt-[4dvh]">LET'S BUILD SOMETHING THAT MATTERS</p>
             </div>
             <div className="ml-[6.67dvw] margin-right mt-[4dvh]">
-                <Card width="45dvw" height="35dvh">
+                <Card className="w-[45dvw] h-[35dvh]">
                     <p className="text-[0.8rem] margin-left mr-[3.33dvw]">Hi, I'm Adick - a Software Engineer specializing in Backend Development & Cloud Solutions!</p>
                     <p className="text-[0.8rem] mt-[4dvh] margin-left mr-[3.33dvw]">Full Stack Developer with 5+ years in Rust and React Native. Microservices, cross-platform applications, and systems for millions of users. Experience with event-driven architecture, Docker, and distributed observability.</p>
                 </Card>

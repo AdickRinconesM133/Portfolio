@@ -23,14 +23,11 @@ export default async function WorkPage({ params }: WorkPageProps) {
 
     const nextWork = getNextWork(slug);
 
-    // Test images using bgVideo tripled
-    const galleryImages = [work.bgVideo, work.bgVideo, work.bgVideo];
-
     return (
         <div>
             <WorkHero title={work.title} title2={work.title2} bgVideo={work.bgVideo} techIcons={work.techIcons} techNames={work.techNames} />
             <WorkDescription slug={work.slug} number={work.number} title={work.title} title2={work.title2} description={work.description} techDescription={work.techDescription} role={work.role} period={work.period} services={work.services} image={work.techIcons} techs={work.techNames} />
-            <WorkGallery images={galleryImages} />
+            <WorkGallery slug={work.slug} />
             <WorkNext slug={nextWork.slug} number={nextWork.number} title={nextWork.title} title2={nextWork.title2} image={nextWork.techIcons} techs={nextWork.techNames} />
             <Contact />
             <Footer />

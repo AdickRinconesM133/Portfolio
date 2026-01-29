@@ -37,8 +37,7 @@ export const AboutStack = () => {
                     {skillCategories.map((category, index) => (
                         <Card
                             key={index}
-                            width="100%"
-                            height="35dvh"
+                            className="w-full h-[35dvh]"
                         >
                             <div className="p-[2dvw] flex flex-col h-full">
                                 <p className="text-[0.9rem] text-accent mb-[2dvh]">{category.title}</p>

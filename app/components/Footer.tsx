@@ -6,13 +6,13 @@ export const Footer = () => {
             </div>
             <div className="flex flex-row gap-[2dvw]">
                 <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/linkedin.svg" alt="Linkedin" className="w-[2dvw] h-[2dvw] brightness-1000" />
+                    <img src="/images/linkedin.svg" alt="Linkedin" className="w-[2dvw] h-[2dvw] min-w-5 min-h-5 brightness-1000" />
                 </a>
                 <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/instagram.svg" alt="Instagram" className="w-[2dvw] h-[2dvw] brightness-1000" />
+                    <img src="/images/instagram.svg" alt="Instagram" className="w-[2dvw] h-[2dvw] min-w-5 min-h-5 brightness-1000" />
                 </a>
                 <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/github.svg" alt="Github" className="w-[2dvw] h-[2dvw] brightness-1000" />
+                    <img src="/images/github.svg" alt="Github" className="w-[2dvw] h-[2dvw] min-w-5 min-h-5 brightness-1000" />
                 </a>
             </div>
         </div>
