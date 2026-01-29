@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Card } from "./card";
 import Image from "next/image";
 
@@ -10,7 +11,9 @@ export const About = () => {
                     <h2 className="mt-[4dvh]">ADICK <span className="text-accent">RINCONES</span></h2>
                     <p className="text-accent text-xl mt-[4dvh]">LET'S BUILD SOMETHING THAT MATTERS</p>
                     <p className="text-[0.8rem] mt-[4dvh]">Software Engineer specializing in Backend Development and Cloud Solutions. Focused on building robust, scalable systems that transform complex business needs into reliable, high-performance applications.</p>
-                    <p className="mt-[4dvh] text-[0.8rem]! border border-accent rounded-full px-[0.8vw] py-[0.8vh] w-fit">LEARN MORE ABOUT ME</p>
+                    <Link href="/about">
+                        <p className="mt-[4dvh] text-[0.8rem]! border border-accent rounded-full px-[0.8vw] py-[0.8vh] w-fit">LEARN MORE ABOUT ME</p>
+                    </Link>
                     <div className="flex flex-wrap justify-start gap-x-[1.75dvw] mt-[4dvh]">
                         <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] rounded-full border-foreground border">
                             <Image
