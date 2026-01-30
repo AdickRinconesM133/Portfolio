@@ -18,7 +18,7 @@ const neuemontreal = localFont({
     },
     {
       path: "./fonts/ppneuemontreal-bold.otf",
-      weight: "500",
+      weight: "700",
       style: "normal",
     }
   ],

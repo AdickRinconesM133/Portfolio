@@ -30,7 +30,7 @@ body {
   height: 100dvh;
   font-family: var(--font-neuemontreal);
   color: var(--foreground) !important;
-  font-size: clamp(0.6rem, 0.75dvw, 1.5625rem);
+  font-size: clamp(0.75rem, 0.75dvw, 1.5625rem);
   letter-spacing: 2px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
