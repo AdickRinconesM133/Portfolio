@@ -15,6 +15,7 @@ export interface Work {
     role: string
     period: string
     services: string[]
+    hint: string
     bgVideo: string
 }
 
@@ -31,6 +32,7 @@ export const works: Work[] = [
         role: "Full-Stack Developer",
         period: "2024-2025",
         services: ["FULL-STACK DEVELOPMENT", "AI INTEGRATION", "DATABASE MANAGEMENT", "CI/CD", "AGILE METHODOLOGIES"],
+        hint: "AI-powered mobility platform",
         bgVideo: "/images/Backgrounds/bgVamos.png"
     },
     {
@@ -45,6 +47,7 @@ export const works: Work[] = [
         role: "Full-Stack Developer",
         period: "2025",
         services: ["FULL-STACK DEVELOPMENT", "END-TO-END SYSTEM", "FINTECH AUTOMATION", "WORKFLOW OPTIMIZATION", "TEAM TRAINING"],
+        hint: "Enterprise payroll & ticketing",
         bgVideo: "/images/Backgrounds/bgSae.png"
     },
     {
@@ -59,6 +62,7 @@ export const works: Work[] = [
         role: "Gameplay Programmer",
         period: "2023-2024",
         services: ["GAMEPLAY MECHANICS", "AI LOGIC", "MULTIPLAYER NETWORK", "PYSICS SIMULATION", "SYSTEM OPTIMIZATION"],
+        hint: "AAA gameplay systems",
         bgVideo: "/images/Backgrounds/bgDrip.png"
     }
 ]

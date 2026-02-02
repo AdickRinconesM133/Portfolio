@@ -10,7 +10,7 @@ export const Card = ({ children, className }: CardProps) => {
         <div
             className={cn(
                 "margin-left bg-background/40 rounded-[24px] flex flex-col justify-center",
-                "w-[93.44dvw] h-[93.44dvh]",
+                "w-[95%] h-auto md:w-[93.44dvw]",
                 className
             )}
         >

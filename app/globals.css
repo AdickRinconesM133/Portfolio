@@ -26,7 +26,6 @@
 
 body {
   background-color: transparent;
-  width: 100dvw;
   height: 100dvh;
   font-family: var(--font-neuemontreal);
   color: var(--foreground) !important;
@@ -48,12 +47,12 @@ h3,
 }
 
 h1 {
-  font-size: clamp(6rem, 13dvw, 30rem);
+  font-size: clamp(3.5rem, 13dvw, 30rem);
   line-height: 0.9;
 }
 
 h2 {
-  font-size: clamp(4rem, 9dvw, 9rem);
+  font-size: clamp(3rem, 9dvw, 9rem);
   line-height: 0.9;
 }
 
@@ -80,17 +79,17 @@ h3 {
 }
 
 @utility margin-center {
-  @apply ml-[3.33dvw] mr-[10.63dvw];
+  @apply ml-4 mr-4 md:ml-[3.33dvw] md:mr-[10.63dvw];
 }
 
 @utility margin-top {
-  @apply mt-[8.06dvh];
+  @apply mt-12 md:mt-[8.06dvh];
 }
 
 @utility margin-left {
-  @apply ml-[3.33dvw];
+  @apply ml-4 md:ml-[3.33dvw];
 }
 
 @utility margin-right {
-  @apply mr-[10.63dvw];
+  @apply mr-4 md:mr-[10.63dvw];
 }

@@ -7,29 +7,53 @@ interface WorkCardProps {
     number: string
     title: string
     title2?: string
+    hint?: string
+    bgVideo?: string
     className?: string
     image: string[]
     techs?: string[]
 }
 
-export const WorkCard = ({ slug, number, title, title2, className, image, techs }: WorkCardProps) => {
+export const WorkCard = ({ slug, number, title, title2, hint, bgVideo, className, image, techs }: WorkCardProps) => {
     return (
-        <Link href={`/work/${slug}`}>
+        <Link href={`/work/${slug}`} className="group">
             <div
                 className={cn(
-                    "bg-background/40 rounded-[24px] flex items-center justify-start",
-                    "w-[93.44dvw] h-[93.44dvh]",
+                    "bg-background/40 rounded-[24px] flex items-center justify-start relative overflow-hidden",
+                    "w-[95%] h-auto md:w-[93.44dvw]",
                     className
                 )}
             >
-                <div className="margin-left flex-1 flex items-center gap-[3dvw] pr-[3.33dvw]">
-                    <div className="flex items-center gap-[3dvw] w-[66%]">
-                        <p className="font-league-gothic text-accent text-2xl">
-                            {number}
-                        </p>
-                        <h2 className="text-[5rem]!">{title}{title2 && ` ${title2}`}</h2>
+                {bgVideo && (
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
+                        <img src={bgVideo} alt="" className="w-full h-full object-cover" />
+                        <div
+                            className="absolute inset-0 backdrop-blur-lg"
+                            style={{ maskImage: 'linear-gradient(to right, black 0%, black 35%, transparent 30%)' }}
+                        />
+                        <div
+                            className="absolute inset-0 backdrop-blur-lg"
+                            style={{ maskImage: 'linear-gradient(to left, black 0%, black 35%, transparent 30%)' }}
+                        />
                     </div>
-                    <div className="flex flex-1 items-center justify-between">
+                )}
+                <div className="margin-left flex-1 flex items-center gap-3 md:gap-[3dvw] pr-4 md:pr-[3.33dvw] py-6 md:py-0 relative z-10">
+                    <div className="flex items-center gap-3 md:gap-[3dvw] w-full md:w-[66%]">
+                        <div className="flex flex-col items-center gap-[0.15dvh]">
+                            <p className="font-league-gothic text-accent text-2xl">
+                                {number}
+                            </p>
+                            <span className="block w-full h-[2px] bg-accent" />
+                        </div>
+                        <h2 className="text-[1.8rem]! md:text-[4rem]!">{title}{title2 && ` ${title2}`}</h2>
+                    </div>
+                    {hint && (
+                        <div className="absolute-center hidden md:flex items-center gap-[0.6dvw] transition-opacity duration-500 group-hover:opacity-0">
+                            <span className="flex items-center justify-center w-[2.2dvw] h-[2.2dvw] min-w-7 min-h-7 rounded-full border border-accent text-accent text-[0.9rem] font-bold leading-[0] pl-[0.2dvw]">!</span>
+                            <p className="text-accent text-[0.7rem] uppercase tracking-wider">{hint}</p>
+                        </div>
+                    )}
+                    <div className="hidden md:flex flex-1 items-center justify-between">
                         <div className="flex flex-col gap-[1dvw] items-start">
                             <div className="flex gap-[1dvw]">
                                 <TechCard image={image[0]} title={techs?.[0] || ""} />

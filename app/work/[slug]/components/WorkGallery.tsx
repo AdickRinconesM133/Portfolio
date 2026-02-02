@@ -100,7 +100,8 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
   const visibleIndices = Array.from({ length: 5 }, (_, i) => activeIndex - 2 + i);
 
   const getSlideStyle = (index: number): React.CSSProperties => {
-    const offset = index - activeIndex + dragOffset / 600;
+    const dragDivisor = typeof window !== 'undefined' ? window.innerWidth * 0.4 : 600;
+    const offset = index - activeIndex + dragOffset / dragDivisor;
     const absOffset = Math.abs(offset);
     const scale = Math.max(0.85, 1 - absOffset * 0.15);
     const opacity = Math.max(0, 1 - absOffset * 0.4);
@@ -152,7 +153,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative margin-top w-full h-[90dvh] overflow-hidden flex-center cursor-grab active:cursor-grabbing select-none touch-none"
+      className="relative margin-top w-full h-[60dvh] md:h-[90dvh] overflow-hidden flex-center cursor-grab active:cursor-grabbing select-none touch-none"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -164,7 +165,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
         return (
           <div
             key={index}
-            className="absolute w-[65%] h-[85%]"
+            className="absolute w-[85%] md:w-[65%] h-[85%]"
             style={getSlideStyle(index)}
           >
             {renderItem(item, index)}

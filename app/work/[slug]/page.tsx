@@ -28,7 +28,7 @@ export default async function WorkPage({ params }: WorkPageProps) {
             <WorkHero title={work.title} title2={work.title2} bgVideo={work.bgVideo} techIcons={work.techIcons} techNames={work.techNames} />
             <WorkDescription slug={work.slug} number={work.number} title={work.title} title2={work.title2} description={work.description} techDescription={work.techDescription} role={work.role} period={work.period} services={work.services} image={work.techIcons} techs={work.techNames} />
             <WorkGallery slug={work.slug} />
-            <WorkNext slug={nextWork.slug} number={nextWork.number} title={nextWork.title} title2={nextWork.title2} image={nextWork.techIcons} techs={nextWork.techNames} />
+            <WorkNext slug={nextWork.slug} number={nextWork.number} title={nextWork.title} title2={nextWork.title2} hint={nextWork.hint} bgVideo={nextWork.bgVideo} image={nextWork.techIcons} techs={nextWork.techNames} />
             <Contact />
             <Footer />
         </div>
