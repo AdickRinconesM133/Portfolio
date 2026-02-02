@@ -86,9 +86,9 @@ export const ContactHero = () => {
   return (
     <div className="flex w-full flex-col">
       <div className="mt-24 md:mt-[18.06dvh] ml-4 md:ml-[10.63dvw] margin-right">
-        <p className="text-[0.8rem] text-accent">CONTACT</p>
-        <h2 className="mt-[4dvh]">GOT A <span className="text-accent">PROJECT?</span></h2>
-        <p className="text-[0.8rem] mt-[4dvh] text-accent uppercase">Tell me about your vision, and I&apos;ll help you bring it to life.</p>
+        <p className="text-[0.55rem] lg:text-[0.8rem] text-accent">CONTACT</p>
+        <h2 className="mt-2 lg:mt-[4dvh]">GOT A <span className="text-accent">PROJECT?</span></h2>
+        <p className="text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4dvh] text-accent uppercase">Tell me about your vision, and I&apos;ll help you bring it to life.</p>
       </div>
       <div className="margin-top ml-4 md:ml-[10.63dvw] mr-4 md:mr-0 flex flex-col md:flex-row gap-6 md:gap-x-[4dvw]">
         <form
@@ -129,7 +129,7 @@ export const ContactHero = () => {
           <button
             type="submit"
             disabled={isSending}
-            className={`border border-accent rounded-full px-6 py-3 md:px-[3dvw] md:py-[1.5dvh] text-xl tracking-wider self-center mt-[2dvh] transition-colors duration-300 ${status === FORM_STATUS.SUCCESS ? 'border-green-400 text-green-400' : status === FORM_STATUS.ERROR ? 'border-red-400 text-red-400' : 'text-accent hover:bg-accent hover:text-background'} ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`border border-accent rounded-full px-6 py-3 md:px-[3dvw] md:py-[1.5dvh] text-[0.55rem] lg:text-xl tracking-wider self-center mt-2 lg:mt-[2dvh] transition-colors duration-300 ${status === FORM_STATUS.SUCCESS ? 'border-green-400 text-green-400' : status === FORM_STATUS.ERROR ? 'border-red-400 text-red-400' : 'text-accent hover:bg-accent hover:text-background'} ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {buttonLabel}
           </button>

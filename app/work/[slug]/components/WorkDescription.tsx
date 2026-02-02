@@ -26,7 +26,7 @@ export const WorkDescription = ({ slug, number, title, title2, description, tech
                 </div>
             </div>
             <div className="margin-top flex flex-col">
-                <h2 className="mt-[4dvh] margin-left pb-[4dvh]">{title} <span className="text-accent">{title2}</span></h2>
+                <h2 className="mt-2 lg:mt-[4dvh] margin-left pb-2 lg:pb-[4dvh]">{title} <span className="text-accent">{title2}</span></h2>
                 <div className="flex flex-col md:flex-row gap-4 md:gap-x-[4dvw]">
                     <div className="flex flex-col gap-y-[4dvh]">
                         <Card className="w-full md:w-[40dvw] h-auto py-8 md:py-[4dvh]">

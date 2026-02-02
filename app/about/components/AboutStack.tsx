@@ -31,7 +31,7 @@ export const AboutStack = () => {
     return (
         <div className="flex w-full flex-col pb-[6dvh]">
             <div className="margin-top margin-left margin-right">
-                <h2 className="text-right mt-[4dvh] mb-[4dvh]">TECH <span className="text-accent">STACK</span></h2>
+                <h2 className="text-right mt-2 mb-2 lg:mt-[4dvh] lg:mb-[4dvh]">TECH <span className="text-accent">STACK</span></h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-[2dvw]">
                     {skillCategories.map((category, index) => (

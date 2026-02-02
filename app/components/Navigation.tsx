@@ -24,7 +24,7 @@ export const Navigation = () => {
     }, [lastScrollY]);
 
     return (
-        <div className={`fixed top-[8.06dvh] left-4 md:left-[3.33dvw] w-[calc(100%-2rem)] md:w-[86.04dvw] z-100 transition-transform duration-500 ease-in-out text-xs md:text-base ${isVisible ? 'translate-y-0' : '-translate-y-[10dvh]'}`}>
+        <div className={`fixed top-[8.06dvh] left-4 md:left-[3.33dvw] w-[calc(100%-2rem)] md:w-[86.04dvw] z-100 transition-transform duration-500 ease-in-out text-[0.55rem] lg:text-base ${isVisible ? 'translate-y-0' : '-translate-y-[10dvh]'}`}>
             <div className='flex justify-between items-center'>
                 <Link href="/">
                     <p>CODE BY ADICK</p>
