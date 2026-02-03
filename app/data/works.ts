@@ -11,6 +11,7 @@ export interface Work {
     description: string
     techIcons: string[]
     techNames: string[]
+    techNamesShort?: string[]
     techDescription: string
     role: string
     period: string
@@ -58,6 +59,7 @@ export const works: Work[] = [
         description: "Engineering core gameplay systems for high-fidelity gaming experiences across two distinct productions. Work included the optimization of an unannounced AAA title using the Lyra Framework and the architectural design of a modular weapon system for Dark Aviary, emphasizing realistic physics and scalable code.",
         techIcons: ["/images/c++.png", "/images/git.png", "/images/unreal.png"],
         techNames: ["C++", "GITHUB", "UNREAL ENGINE"],
+        techNamesShort: ["C++", "GITHUB", "UE"],
         techDescription: "C++, Unreal Engine 5 (UE5), Lyra Starter Game Framework.",
         role: "Gameplay Programmer",
         period: "2023-2024",

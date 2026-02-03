@@ -29,23 +29,23 @@ export const AboutStack = () => {
     ];
 
     return (
-        <div className="flex w-full flex-col pb-[6dvh]">
-            <div className="margin-top margin-left margin-right">
+        <div className="flex w-full flex-col pb-[15dvh] lg:pb-[6dvh]">
+            <div className="margin-top mr-4 ml-4 lg:ml-[3.33dvw] lg:mr-[3.23dvw]">
                 <h2 className="text-right mt-2 mb-2 lg:mt-[4dvh] lg:mb-[4dvh]">TECH <span className="text-accent">STACK</span></h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-[2dvw]">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-[1.5dvw]">
                     {skillCategories.map((category, index) => (
                         <Card
                             key={index}
-                            className="w-full h-auto"
+                            className="w-full lg:w-full lg:ml-0"
                         >
-                            <div className="p-4 md:p-[2dvw] flex flex-col h-full">
+                            <div className="p-4 lg:p-[1.5dvw] flex flex-col h-full">
                                 <p className="text-[0.9rem] text-accent mb-[2dvh]">{category.title}</p>
-                                <div className="flex flex-wrap gap-2 md:gap-[0.5dvw]">
+                                <div className="flex flex-wrap gap-2 lg:gap-[0.5dvw]">
                                     {category.skills.map((skill, skillIndex) => (
                                         <p
                                             key={skillIndex}
-                                            className="text-[0.8rem]! border border-accent rounded-full px-3 py-1.5 md:px-[0.8vw] md:py-[0.8vh] w-fit"
+                                            className="text-[0.8rem]! border border-accent rounded-full px-3 py-1.5 lg:px-[0.8vw] lg:py-[0.8vh] w-fit"
                                         >
                                             {skill}
                                         </p>

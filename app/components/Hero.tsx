@@ -5,7 +5,7 @@ export const Hero = () => {
         <div className="flex w-full h-dvh overflow-hidden items-center justify-center lg:items-start lg:justify-end">
             <div className="px-4 lg:px-0 lg:mt-[27.87dvh] lg:mr-[10.63dvw]">
                 <p className=" text-accent text-[0.55rem] lg:text-s text-right mb-1 lg:mb-[2.2dvh]">BUILDING THE FUTURE COMMIT BY COMMIT </p>
-                <h1 className=" text-right text-[5rem]! lg:text-[13dvw]!">SOFTWARE</h1>
+                <h1 className=" text-right text-[6rem]! md:text-[9rem]! lg:text-[13dvw]!">SOFTWARE</h1>
                 <h3 className=" text-right font-bold! font-neuemontreal! tracking-wider mt-[0.5dvh]">ENGINEER</h3>
                 <ul className="flex flex-wrap mt-2 mb-3 lg:mt-[4dvh] lg:mb-[5dvh] justify-end gap-x-3 md:gap-x-[1.88dvw]">
                     <li className=" text-accent text-[0.55rem] lg:text-s text-right">NEXT.JS</li>

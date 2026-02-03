@@ -12,15 +12,17 @@ interface WorkCardProps {
     className?: string
     image: string[]
     techs?: string[]
+    techsShort?: string[]
 }
 
-export const WorkCard = ({ slug, number, title, title2, hint, bgVideo, className, image, techs }: WorkCardProps) => {
+export const WorkCard = ({ slug, number, title, title2, hint, bgVideo, className, image, techs, techsShort }: WorkCardProps) => {
+    const mobileTechs = techsShort || techs
     return (
         <Link href={`/work/${slug}`} className="group">
             <div
                 className={cn(
                     "bg-background/40 rounded-[24px] flex items-center justify-start relative overflow-hidden",
-                    "w-[95%] h-auto md:w-[93.44dvw]",
+                    "w-full h-auto lg:w-[93.44dvw]",
                     className
                 )}
             >
@@ -38,14 +40,29 @@ export const WorkCard = ({ slug, number, title, title2, hint, bgVideo, className
                     </div>
                 )}
                 <div className="margin-left flex-1 flex items-center gap-3 md:gap-[3dvw] pr-4 md:pr-[3.33dvw] py-6 md:py-0 relative z-10">
-                    <div className="flex items-center gap-3 md:gap-[3dvw] w-full md:w-[66%]">
-                        <div className="flex flex-col items-center gap-[0.15dvh]">
-                            <p className="font-league-gothic text-accent text-2xl">
-                                {number}
-                            </p>
-                            <span className="block w-full h-[2px] bg-accent" />
+                    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-[3dvw] w-full md:w-[66%]">
+                        <div className="flex items-center gap-3 md:gap-[3dvw]">
+                            <div className="flex flex-col items-center gap-[0.15dvh]">
+                                <p className="font-league-gothic text-accent text-2xl">
+                                    {number}
+                                </p>
+                                <span className="block w-full h-[2px] bg-accent" />
+                            </div>
+                            <h2 className="text-[1.8rem]! md:text-[4rem]!">{title}{title2 && ` ${title2}`}</h2>
                         </div>
-                        <h2 className="text-[1.8rem]! md:text-[4rem]!">{title}{title2 && ` ${title2}`}</h2>
+                        {/* Mobile TechCards */}
+                        <div className="flex md:hidden items-center gap-3">
+                            {/* Invisible spacer matching number width */}
+                            <div className="flex flex-col items-center gap-[0.15dvh] invisible" aria-hidden="true">
+                                <p className="font-league-gothic text-2xl">00</p>
+                                <span className="block w-full h-[2px]" />
+                            </div>
+                            <div className="flex gap-2">
+                                <TechCard image={image[0]} title={mobileTechs?.[0] || ""} size="sm" />
+                                <TechCard image={image[1]} title={mobileTechs?.[1] || ""} size="sm" />
+                                <TechCard image={image[2]} title={mobileTechs?.[2] || ""} size="sm" />
+                            </div>
+                        </div>
                     </div>
                     {hint && (
                         <div className="absolute-center hidden md:flex items-center gap-[0.6dvw] transition-opacity duration-500 group-hover:opacity-0">

@@ -9,7 +9,7 @@ export const Work = () => {
                 <h2 className="text-right mt-2 lg:mt-[4dvh]">PROJECT <span className="text-accent">HIGHLIGHT</span></h2>
                 <p className="text-accent text-[0.55rem] lg:text-xl text-right mt-2 lg:mt-[4dvh]">THESE ARE A SELECTION OF MY WORK</p>
             </div>
-            <div className="margin-top margin-left flex flex-col gap-[4dvw]">
+            <div className="margin-top flex flex-col px-4 lg:px-0 lg:ml-[3.33dvw] gap-[4dvw]">
                 {works.map((work) => (
                     <WorkCard
                         key={work.slug}
@@ -19,9 +19,10 @@ export const Work = () => {
                         title2={work.title2}
                         hint={work.hint}
                         bgVideo={work.bgVideo}
-                        className="w-[93.34dvw] h-auto lg:h-[35dvh]"
+                        className="w-full lg:w-[93.34dvw] h-auto lg:h-[35dvh]"
                         image={work.techIcons}
                         techs={work.techNames}
+                        techsShort={work.techNamesShort}
                     />
                 ))}
             </div>
