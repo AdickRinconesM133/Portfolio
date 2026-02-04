@@ -1,6 +1,43 @@
+'use client';
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export const Footer = () => {
+    const footerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const el = footerRef.current;
+        if (!el) return;
+
+        const ctx = gsap.context(() => {
+            gsap.fromTo(el,
+                {
+                    opacity: 0,
+                    y: 30,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 100%",
+                        toggleActions: "play none none none",
+                    }
+                }
+            );
+        }, footerRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <div className="flex flex-row justify-between items-center w-full h-[15dvh] overflow-hidden px-4 md:px-[13.96dvw]">
+        <div ref={footerRef} className="flex flex-row justify-between items-center w-full h-[15dvh] overflow-hidden px-4 md:px-[13.96dvw]">
             <div className="text-[0.8rem]">
                 <p>© 2026 ADICK RINCONES</p>
             </div>
