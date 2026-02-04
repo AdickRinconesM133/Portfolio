@@ -5,27 +5,23 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollTextReveal } from "./ScrollTextReveal";
 
-/**
- * Scroll ranges for each hero element group.
- * [start, end] = range of scrollY/heroHeight where the group goes from visible to hidden.
- * Shorter ranges = faster disappear. Single words need tight ranges.
- */
+
 const RANGES = {
-    subtitle: [0.02, 0.2],   // Multi-word, wide range for word-by-word effect
-    title:    [0.08, 0.18],   // Single word — tight range
-    role:     [0.14, 0.24],   // Single word — tight range
-    techList: [0.18, 0.5],    // Group of elements — animated sequentially
-    icons:    [0.24, 0.5],    // Group of elements — animated sequentially
+    subtitle: [0.02, 0.2],   
+    title:    [0.08, 0.18],   
+    role:     [0.14, 0.24],   
+    techList: [0.18, 0.5],    
+    icons:    [0.24, 0.5],    
 } as const;
 
-/** Clamp a scroll ratio into a 0-1 progress for a given range */
+
 const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]): number => {
     if (scrollRatio <= start) return 0;
     if (scrollRatio >= end) return 1;
     return (scrollRatio - start) / (end - start);
 };
 
-/** Apply progressive visibility to a list of elements based on progress */
+
 const applyGroupProgress = (elements: Element[], progress: number) => {
     const count = elements.length;
     if (count === 0) return;
@@ -87,7 +83,7 @@ export const Hero = () => {
         return () => window.removeEventListener('scroll', update);
     }, [update]);
 
-    // Animate tech list items as a group (left to right)
+    
     useEffect(() => {
         const list = techListRef.current;
         if (!list) return;
@@ -95,7 +91,7 @@ export const Hero = () => {
         applyGroupProgress(items, progresses.techList);
     }, [progresses.techList]);
 
-    // Animate social icons as a group (left to right)
+    
     useEffect(() => {
         const icons = iconsRef.current;
         if (!icons) return;

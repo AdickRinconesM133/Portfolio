@@ -11,10 +11,7 @@ interface ScrollTriggerTextProps {
     className?: string;
 }
 
-/**
- * ScrollTriggerText - Animates text word-by-word on scroll using GSAP ScrollTrigger.
- * Similar to ScrollTextReveal but self-contained with its own trigger.
- */
+
 export const ScrollTriggerText = ({
     children,
     className = '',
@@ -41,7 +38,7 @@ export const ScrollTriggerText = ({
         if (!el || wordElements.length === 0) return;
 
         const ctx = gsap.context(() => {
-            // Initial state
+            
             gsap.set(wordElements, {
                 opacity: 0,
                 y: -8,

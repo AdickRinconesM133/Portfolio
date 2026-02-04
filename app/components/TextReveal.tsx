@@ -1,27 +1,22 @@
 'use client';
 
 import gsap from "gsap";
-import { useEffect, useRef, type ReactNode } from "react";
+import { isValidElement, useEffect, useRef, type ReactNode } from "react";
 
 interface TextRevealProps {
     children: ReactNode;
     isVisible: boolean;
-    /** Duration per word in seconds. Default: 0.4 */
+    
     duration?: number;
-    /** Stagger delay between words in seconds. Default: 0.06 */
+    
     stagger?: number;
-    /** Initial delay before animation starts. Default: 0 */
+    
     delay?: number;
-    /** Custom className for the wrapper */
+    
     className?: string;
 }
 
-/**
- * TextReveal component - Animates text visibility word by word.
- *
- * - isVisible=true → Words fade in from right to left
- * - isVisible=false → Words fade out from left to right
- */
+
 export const TextReveal = ({
     children,
     isVisible,
@@ -34,12 +29,12 @@ export const TextReveal = ({
     const wordsRef = useRef<HTMLSpanElement[]>([]);
     const isFirstRender = useRef(true);
 
-    // Extract text content from children
+    
     const getText = (node: ReactNode): string => {
         if (typeof node === 'string') return node;
         if (typeof node === 'number') return String(node);
         if (Array.isArray(node)) return node.map(getText).join('');
-        if (node && typeof node === 'object' && 'props' in node) {
+        if (isValidElement<{ children?: ReactNode }>(node)) {
             return getText(node.props.children);
         }
         return '';
@@ -61,7 +56,7 @@ export const TextReveal = ({
             return;
         }
 
-        // Kill any running animations on these elements before starting new ones
+        
         wordElements.forEach(el => gsap.killTweensOf(el));
 
         if (isVisible) {

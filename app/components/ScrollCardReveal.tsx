@@ -4,22 +4,26 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ReactNode, useEffect, useRef } from 'react';
 
-// Register ScrollTrigger
+
 gsap.registerPlugin(ScrollTrigger);
 
 interface ScrollCardRevealProps {
     children: ReactNode;
     className?: string;
+    
+    start?: string;
+    
+    end?: string;
 }
 
-export const ScrollCardReveal = ({ children, className = '' }: ScrollCardRevealProps) => {
+export const ScrollCardReveal = ({ children, className = '', start = 'top 90%', end = 'top 60%' }: ScrollCardRevealProps) => {
     const elRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const el = elRef.current;
         if (!el) return;
 
-        // Clean up previous animations/triggers if any
+        
         const ctx = gsap.context(() => {
             gsap.fromTo(el,
                 {
@@ -34,9 +38,9 @@ export const ScrollCardReveal = ({ children, className = '' }: ScrollCardRevealP
                     duration: 1,
                     scrollTrigger: {
                         trigger: el,
-                        start: "top 90%", // Start when top of element hits 90% of viewport
-                        end: "top 60%",   // Full visible when top of element hits 60% of viewport
-                        scrub: 1,         // Smooth scrubbing
+                        start,
+                        end,
+                        scrub: 1,
                         toggleActions: 'play none none reverse'
                     }
                 }

@@ -40,14 +40,14 @@ interface MenuButtonProps {
     isVisible: boolean;
     isOpen: boolean;
     onClick: () => void;
-    /** If true, skips animation and shows button immediately */
+    
     animated?: boolean;
-    /** Delay before animation starts */
+    
     delay?: number;
 }
 
 const MENU_ICON_ANIMATION_DURATION = 0.35;
-const MENU_TOGGLE_TOTAL_DURATION = MENU_ICON_ANIMATION_DURATION * 2 + 0.1; // Exit + enter + buffer
+const MENU_TOGGLE_TOTAL_DURATION = MENU_ICON_ANIMATION_DURATION * 2 + 0.1; 
 
 const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: MenuButtonProps) => {
     const hamburgerRef = useRef<HTMLSpanElement[]>([]);
@@ -63,7 +63,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
         closeLines.forEach(el => gsap.killTweensOf(el));
     };
 
-    // Handle visibility animation (scroll-based)
+    
     useEffect(() => {
         const hamburgerLines = hamburgerRef.current.filter(Boolean);
         const closeLines = closeRef.current.filter(Boolean);
@@ -81,7 +81,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
 
         if (!animated) return;
 
-        // Kill any running animations before starting new ones
+        
         killAllTweens();
 
         if (isVisible) {
@@ -118,7 +118,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
         }
     }, [isVisible, animated, delay, isOpen]);
 
-    // Handle open/close toggle animation (always animates, regardless of `animated` prop)
+    
     useEffect(() => {
         if (isFirstRender.current) return;
         if (prevIsOpen.current === isOpen) return;
@@ -130,7 +130,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
         const visibleState = { opacity: 1, y: 0, filter: 'blur(0px)' };
         const hiddenState = { opacity: 0, y: -8, filter: 'blur(4px)' };
 
-        // Kill any running animations and block clicks
+        
         killAllTweens();
         setIsAnimating(true);
 
@@ -180,7 +180,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
             className="relative flex justify-center items-center w-6 h-6 cursor-pointer"
             aria-label={isOpen ? "Close menu" : "Open menu"}
         >
-            {/* Hamburger icon */}
+            {}
             <div className="absolute flex flex-col justify-center items-end gap-[5px]">
                 <span
                     ref={(el) => { if (el) hamburgerRef.current[0] = el; }}
@@ -196,7 +196,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
                 />
             </div>
 
-            {/* Close (X) icon */}
+            {}
             <div className="absolute flex justify-center items-center">
                 <span
                     ref={(el) => { if (el) closeRef.current[0] = el; }}
@@ -211,12 +211,12 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
     );
 };
 
-/** Threshold in pixels - text is visible when scroll is below this value */
+
 const SCROLL_THRESHOLD = 50;
 
-/** Animation durations for sequencing */
-const NAV_ANIMATION_DURATION = 0.6; // Time for nav to fully disappear
-const MENU_ANIMATION_DURATION = 0.5; // Time for menu button to fully disappear
+
+const NAV_ANIMATION_DURATION = 0.6; 
+const MENU_ANIMATION_DURATION = 0.5; 
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -241,12 +241,12 @@ export const Navigation = () => {
 
     const activeKey = getActiveKey();
 
-    // Animation effect - ONLY for the line
+    
     useEffect(() => {
         const prevActive = prevActiveRef.current;
         const currentActive = activeKey;
 
-        // First render - set initial state without animation
+        
         if (isFirstRender.current) {
             isFirstRender.current = false;
             if (currentActive) {
@@ -263,7 +263,7 @@ export const Navigation = () => {
 
         const tl = gsap.timeline();
 
-        // Exit animation - line exits to the left
+        
         if (prevActive) {
             const prevLine = lineRefs.current[prevActive];
             if (prevLine) {
@@ -276,7 +276,7 @@ export const Navigation = () => {
             }
         }
 
-        // Enter animation - line enters from the right
+        
         if (currentActive) {
             const currentLine = lineRefs.current[currentActive];
             if (currentLine) {
@@ -293,13 +293,13 @@ export const Navigation = () => {
         prevActiveRef.current = currentActive;
     }, [activeKey]);
 
-    // Scroll detection - check if at top of page
+    
     useEffect(() => {
         const handleScroll = () => {
             setIsAtTop(window.scrollY <= SCROLL_THRESHOLD);
         };
 
-        // Check initial position
+        
         handleScroll();
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -318,15 +318,45 @@ export const Navigation = () => {
         toggleMenu();
     };
 
-    // Calculate delays based on transition direction
-    // When nav is appearing (isAtTop = true): wait for menu button to disappear first
-    // When menu is appearing (isAtTop = false): wait for nav to disappear first
+    
+    
+    
     const navAppearDelay = isAtTop ? MENU_ANIMATION_DURATION : 0;
     const menuAppearDelay = !isAtTop ? NAV_ANIMATION_DURATION : 0;
 
+    
+    useEffect(() => {
+        if (isFirstRender.current) return;
+        if (prevIsAtTopRef.current === isAtTop) return;
+        prevIsAtTopRef.current = isAtTop;
+
+        const currentActive = activeKey;
+        if (!currentActive) return;
+
+        const line = lineRefs.current[currentActive];
+        if (!line) return;
+
+        gsap.killTweensOf(line, 'opacity');
+
+        if (!isAtTop) {
+            gsap.to(line, {
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power2.inOut',
+            });
+        } else {
+            gsap.to(line, {
+                opacity: 1,
+                duration: 0.3,
+                delay: navAppearDelay,
+                ease: 'power3.out',
+            });
+        }
+    }, [isAtTop, activeKey, navAppearDelay]);
+
     return (
         <>
-            {/* Desktop navigation */}
+            {}
             <div className={`hidden md:block fixed top-[8.06dvh] left-[3.33dvw] w-[86.04dvw] z-100 text-[0.55rem] lg:text-sm ${!isAtTop ? 'pointer-events-none' : ''}`}>
                 <div className='flex justify-between items-center'>
                     <Link href="/">
@@ -374,17 +404,17 @@ export const Navigation = () => {
                 </div>
             </div>
 
-            {/* Desktop menu button - appears when scrolled */}
+            {}
             <div className={`hidden md:block fixed top-[8.06dvh] right-[3.33dvw] z-100 ${isAtTop ? 'pointer-events-none' : ''}`}>
                 <MenuButton isVisible={!isAtTop} isOpen={isMenuOpen} onClick={handleMenuToggle} delay={menuAppearDelay} />
             </div>
 
-            {/* Mobile menu button - always visible */}
+            {}
             <div className="md:hidden fixed top-[8.06dvh] right-4 z-100">
                 <MenuButton isVisible={true} isOpen={isMenuOpen} onClick={handleMenuToggle} animated={false} />
             </div>
 
-            {/* Menu overlay */}
+            {}
             {isMenuOpen && (
                 <div className="fixed inset-0 z-99 p-2 md:p-[2dvw]">
                     <div className="w-full h-full rounded-[24px] bg-background/40 backdrop-blur-2xl" />

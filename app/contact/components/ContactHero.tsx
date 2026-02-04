@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, useCallback, useEffect, useRef, type FormEvent } from 'react';
+import { ScrollCardReveal, ScrollTextReveal } from '@/app/components';
 
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? '';
 
@@ -31,7 +32,26 @@ const FORM_STATUS = {
 
 type FormStatus = (typeof FORM_STATUS)[keyof typeof FORM_STATUS];
 
+const RANGES = {
+    label:    [0.02, 0.15],
+    title:    [0.06, 0.14],
+    subtitle: [0.10, 0.30],
+} as const;
+
+const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]): number => {
+    if (scrollRatio <= start) return 0;
+    if (scrollRatio >= end) return 1;
+    return (scrollRatio - start) / (end - start);
+};
+
 export const ContactHero = () => {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [progresses, setProgresses] = useState({
+      label: 0,
+      title: 0,
+      subtitle: 0,
+  });
+
   const [formData, setFormData] = useState({
     fullName: '',
     company: '',
@@ -39,6 +59,28 @@ export const ContactHero = () => {
     message: '',
   });
   const [status, setStatus] = useState<FormStatus>(FORM_STATUS.IDLE);
+
+  const update = useCallback(() => {
+      const el = headerRef.current;
+      if (!el) return;
+
+      const viewportHeight = window.innerHeight;
+      if (viewportHeight === 0) return;
+
+      const scrollRatio = window.scrollY / viewportHeight;
+
+      setProgresses({
+          label: toProgress(scrollRatio, RANGES.label),
+          title: toProgress(scrollRatio, RANGES.title),
+          subtitle: toProgress(scrollRatio, RANGES.subtitle),
+      });
+  }, []);
+
+  useEffect(() => {
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      return () => window.removeEventListener('scroll', update);
+  }, [update]);
 
   const handleChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -85,71 +127,82 @@ export const ContactHero = () => {
 
   return (
     <div className="flex w-full flex-col">
-      <div className="mt-24 md:mt-[18.06dvh] ml-4 md:ml-[10.63dvw] margin-right">
-        <p className="text-[0.55rem] lg:text-[0.8rem] text-accent">CONTACT</p>
-        <h2 className="mt-2 lg:mt-[4dvh]">GOT A <span className="text-accent">PROJECT?</span></h2>
-        <p className="text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4dvh] text-accent uppercase">Tell me about your vision, and I&apos;ll help you bring it to life.</p>
+      <div ref={headerRef} className="mt-24 md:mt-[18.06dvh] ml-4 md:ml-[10.63dvw] margin-right">
+        <p className="text-[0.55rem] lg:text-[0.8rem] text-accent">
+          <ScrollTextReveal progress={progresses.label}>CONTACT</ScrollTextReveal>
+        </p>
+        <h2 className="mt-2 lg:mt-[4dvh]">
+          <ScrollTextReveal progress={progresses.title}>GOT A</ScrollTextReveal>{' '}
+          <ScrollTextReveal progress={progresses.title} className="text-accent">PROJECT?</ScrollTextReveal>
+        </h2>
+        <p className="text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4dvh] text-accent uppercase">
+          <ScrollTextReveal progress={progresses.subtitle}>Tell me about your vision, and I'll help you bring it to life.</ScrollTextReveal>
+        </p>
       </div>
       <div className="margin-top ml-4 md:ml-[10.63dvw] mr-4 md:mr-0 flex flex-col md:flex-row gap-6 md:gap-x-[4dvw]">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-background/40 rounded-3xl flex flex-col justify-center gap-[4dvh] p-4 md:p-[3dvw] w-full md:w-[40dvw]"
-        >
-          {CONTACT_FIELDS.map((field) => (
-            <div key={field.name} className="flex items-start gap-[2dvw]">
-              <p className="font-league-gothic text-accent text-2xl leading-none mt-[0.5dvh]">
-                {field.number}
-              </p>
-              <div className="flex-1 flex flex-col gap-[1dvh]">
-                <label className="text-[0.9rem] tracking-wider">
-                  {field.label}{field.required && ' *'}
-                </label>
-                {field.name === 'message' ? (
-                  <textarea
-                    name={field.name}
-                    value={formData[field.name]}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                    required={field.required}
-                    rows={4}
-                    className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1dvh] outline-none resize-none transition-colors duration-300 focus:border-accent"
-                  />
-                ) : (
-                  <input
-                    type={field.name === 'email' ? 'email' : 'text'}
-                    name={field.name}
-                    value={formData[field.name as keyof typeof formData]}
-                    onChange={(e) => handleChange(field.name, e.target.value)}
-                    required={field.required}
-                    className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1dvh] outline-none transition-colors duration-300 focus:border-accent"
-                  />
-                )}
-              </div>
-            </div>
-          ))}
-          <button
-            type="submit"
-            disabled={isSending}
-            className={`border border-accent rounded-full px-6 py-3 md:px-[3dvw] md:py-[1.5dvh] text-[0.55rem] lg:text-xl tracking-wider self-center mt-2 lg:mt-[2dvh] transition-colors duration-300 ${status === FORM_STATUS.SUCCESS ? 'border-green-400 text-green-400' : status === FORM_STATUS.ERROR ? 'border-red-400 text-red-400' : 'text-accent hover:bg-accent hover:text-background'} ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
+        <ScrollCardReveal start="top 98%" end="top 70%">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-background/40 rounded-3xl flex flex-col justify-center gap-[4dvh] p-4 md:p-[3dvw] w-full md:w-[40dvw]"
           >
-            {buttonLabel}
-          </button>
-        </form>
-        <div
-          className="bg-background/40 rounded-3xl flex flex-col p-4 md:p-[3dvw] self-start w-full md:w-[37dvw]"
-        >
-          <p className="text-[0.9rem] text-accent mb-[2dvh]">CONTACT DETAILS</p>
-          {CONTACT_DETAILS.map((detail) => (
-            <a
-              key={detail.label}
-              href={detail.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-[2dvh] text-[0.8rem]! border border-accent rounded-full px-3 py-1.5 md:px-[0.8vw] md:py-[0.8vh] w-fit transition-colors duration-300 hover:bg-accent hover:text-background"
+            {CONTACT_FIELDS.map((field) => (
+              <div key={field.name} className="flex items-start gap-[2dvw]">
+                <p className="font-league-gothic text-accent text-2xl leading-none mt-[0.5dvh]">
+                  {field.number}
+                </p>
+                <div className="flex-1 flex flex-col gap-[1dvh]">
+                  <label className="text-[0.9rem] tracking-wider">
+                    {field.label}{field.required && ' *'}
+                  </label>
+                  {field.name === 'message' ? (
+                    <textarea
+                      name={field.name}
+                      value={formData[field.name]}
+                      onChange={(e) => handleChange(field.name, e.target.value)}
+                      required={field.required}
+                      rows={4}
+                      className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1dvh] outline-none resize-none transition-colors duration-300 focus:border-accent"
+                    />
+                  ) : (
+                    <input
+                      type={field.name === 'email' ? 'email' : 'text'}
+                      name={field.name}
+                      value={formData[field.name as keyof typeof formData]}
+                      onChange={(e) => handleChange(field.name, e.target.value)}
+                      required={field.required}
+                      className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1dvh] outline-none transition-colors duration-300 focus:border-accent"
+                    />
+                  )}
+                </div>
+              </div>
+            ))}
+            <button
+              type="submit"
+              disabled={isSending}
+              className={`border border-accent rounded-full px-6 py-3 md:px-[3dvw] md:py-[1.5dvh] text-[0.55rem] lg:text-xl tracking-wider self-center mt-2 lg:mt-[2dvh] transition-colors duration-300 ${status === FORM_STATUS.SUCCESS ? 'border-green-400 text-green-400' : status === FORM_STATUS.ERROR ? 'border-red-400 text-red-400' : 'text-accent hover:bg-accent hover:text-background'} ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              {detail.label}
-            </a>
-          ))}
-        </div>
+              {buttonLabel}
+            </button>
+          </form>
+        </ScrollCardReveal>
+        <ScrollCardReveal start="top 98%" end="top 70%">
+          <div
+            className="bg-background/40 rounded-3xl flex flex-col p-4 md:p-[3dvw] self-start w-full md:w-[37dvw]"
+          >
+            <p className="text-[0.9rem] text-accent mb-[2dvh]">CONTACT DETAILS</p>
+            {CONTACT_DETAILS.map((detail) => (
+              <a
+                key={detail.label}
+                href={detail.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-[2dvh] text-[0.8rem]! border border-accent rounded-full px-3 py-1.5 md:px-[0.8vw] md:py-[0.8vh] w-fit transition-colors duration-300 hover:bg-accent hover:text-background"
+              >
+                {detail.label}
+              </a>
+            ))}
+          </div>
+        </ScrollCardReveal>
       </div>
     </div>
   );
