@@ -24,6 +24,10 @@
   }
 }
 
+html {
+  background-color: var(--background);
+}
+
 body {
   background-color: transparent;
   height: 100dvh;

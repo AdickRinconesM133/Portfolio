@@ -11,9 +11,11 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [activeIndex, setActiveIndex] = useState(1000);
   const [dragOffset, setDragOffset] = useState(0);
+  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const dragRef = useRef({ active: false, startX: 0 });
+  const dragDistanceRef = useRef(0);
   const videoRefs = useRef<Map<number, HTMLVideoElement>>(new Map());
 
   useEffect(() => {
@@ -64,7 +66,9 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
   }, [activeIndex]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === 'touch') return;
     dragRef.current = { active: true, startX: e.clientX };
+    dragDistanceRef.current = 0;
     setDragOffset(0);
     stopAutoPlay();
     containerRef.current?.setPointerCapture(e.pointerId);
@@ -72,7 +76,9 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!dragRef.current.active) return;
-    setDragOffset(e.clientX - dragRef.current.startX);
+    const offset = e.clientX - dragRef.current.startX;
+    setDragOffset(offset);
+    dragDistanceRef.current = Math.abs(offset);
   };
 
   const handlePointerUp = () => {
@@ -83,6 +89,14 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
       setActiveIndex(prev => prev + 1);
     } else if (dragOffset > 100) {
       setActiveIndex(prev => prev - 1);
+    } else if (dragDistanceRef.current < 10) {
+      const item = getItem(activeIndex);
+      if (item) {
+        setSelectedItem(item);
+        stopAutoPlay();
+        setDragOffset(0);
+        return;
+      }
     }
 
     setDragOffset(0);
@@ -96,6 +110,20 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
       videoRefs.current.delete(index);
     }
   };
+
+  const closeLightbox = () => {
+    setSelectedItem(null);
+    startAutoPlay();
+  };
+
+  useEffect(() => {
+    if (!selectedItem) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedItem]);
 
   const visibleIndices = Array.from({ length: 5 }, (_, i) => activeIndex - 2 + i);
 
@@ -151,27 +179,56 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
   if (!items.length) return null;
 
   return (
-    <div
-      ref={containerRef}
-      className="relative margin-top w-full h-[60dvh] md:h-[90dvh] overflow-hidden flex-center cursor-grab active:cursor-grabbing select-none touch-none pb-[15dvh] lg:pb-0"
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-    >
-      {visibleIndices.map((index) => {
-        const item = getItem(index);
-        if (!item) return null;
+    <>
+      <div
+        ref={containerRef}
+        className="relative margin-top w-full h-[60dvh] md:h-[90dvh] overflow-hidden flex-center md:cursor-grab md:active:cursor-grabbing select-none md:touch-none pb-[15dvh] lg:pb-0"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+      >
+        {visibleIndices.map((index) => {
+          const item = getItem(index);
+          if (!item) return null;
 
-        return (
-          <div
-            key={index}
-            className="absolute w-[85%] md:w-[65%] h-[85%]"
-            style={getSlideStyle(index)}
-          >
-            {renderItem(item, index)}
+          return (
+            <div
+              key={index}
+              className="absolute w-[85%] md:w-[65%] h-[85%]"
+              style={getSlideStyle(index)}
+            >
+              {renderItem(item, index)}
+            </div>
+          );
+        })}
+      </div>
+
+      {selectedItem && (
+        <div
+          className="fixed inset-0 z-[110] p-2 md:p-[2dvw] cursor-pointer"
+          onClick={closeLightbox}
+        >
+          <div className="w-full h-full rounded-[24px] bg-background/40 backdrop-blur-2xl flex-center overflow-hidden">
+            {selectedItem.type === 'video' ? (
+              <video
+                className="w-full h-full object-contain"
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source src={selectedItem.url} />
+              </video>
+            ) : (
+              <img
+                src={selectedItem.url}
+                alt="Gallery item fullscreen"
+                className="w-full h-full object-contain"
+              />
+            )}
           </div>
-        );
-      })}
-    </div>
+        </div>
+      )}
+    </>
   );
 };

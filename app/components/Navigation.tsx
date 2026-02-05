@@ -14,23 +14,19 @@ interface NavLinkProps {
     children: string;
     isActive: boolean;
     isTextVisible: boolean;
-    lineRef: (el: HTMLSpanElement | null) => void;
+    linkRef: (el: HTMLDivElement | null) => void;
     revealDelay?: number;
 }
 
-const NavLink = ({ href, children, isActive, isTextVisible, lineRef, revealDelay = 0 }: NavLinkProps) => {
+const NavLink = ({ href, children, isActive, isTextVisible, linkRef, revealDelay = 0 }: NavLinkProps) => {
     return (
         <Link href={href}>
-            <div className="flex flex-col items-center gap-[0.15dvh]">
+            <div ref={linkRef} className="flex flex-col items-center pb-[calc(0.15dvh+2px)]">
                 <p className={`transition-colors duration-300 ${isActive ? 'text-accent' : 'text-foreground'}`}>
                     <TextReveal isVisible={isTextVisible} delay={revealDelay}>
                         {children}
                     </TextReveal>
                 </p>
-                <span
-                    ref={lineRef}
-                    className="block w-full h-[2px] bg-accent scale-x-0"
-                />
             </div>
         </Link>
     );
@@ -222,15 +218,18 @@ export const Navigation = () => {
     const pathname = usePathname();
     const { isMenuOpen, toggleMenu } = useMenu();
     const [isAtTop, setIsAtTop] = useState(true);
-    const prevActiveRef = useRef<NavKey | null>(null);
-    const prevIsAtTopRef = useRef(true);
-    const isFirstRender = useRef(true);
+    const [hoveredKey, setHoveredKey] = useState<NavKey | null>(null);
 
-    const lineRefs = useRef<Record<NavKey, HTMLSpanElement | null>>({
+    const linkRefs = useRef<Record<NavKey, HTMLDivElement | null>>({
         work: null,
         about: null,
         contact: null,
     });
+    const navListRef = useRef<HTMLUListElement>(null);
+    const hoverLineRef = useRef<HTMLSpanElement>(null);
+    const lineVisibleRef = useRef(false);
+    const isFirstLineRender = useRef(true);
+    const prevIsAtTopForLine = useRef(true);
 
     const getActiveKey = (): NavKey | null => {
         if (pathname === "/work" || pathname.startsWith("/work/")) return 'work';
@@ -241,57 +240,6 @@ export const Navigation = () => {
 
     const activeKey = getActiveKey();
 
-    
-    useEffect(() => {
-        const prevActive = prevActiveRef.current;
-        const currentActive = activeKey;
-
-        
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            if (currentActive) {
-                const line = lineRefs.current[currentActive];
-                if (line) {
-                    gsap.set(line, { scaleX: 1, transformOrigin: "right" });
-                }
-            }
-            prevActiveRef.current = currentActive;
-            return;
-        }
-
-        if (prevActive === currentActive) return;
-
-        const tl = gsap.timeline();
-
-        
-        if (prevActive) {
-            const prevLine = lineRefs.current[prevActive];
-            if (prevLine) {
-                tl.to(prevLine, {
-                    scaleX: 0,
-                    transformOrigin: "left",
-                    duration: 0.3,
-                    ease: "power2.inOut",
-                }, 0);
-            }
-        }
-
-        
-        if (currentActive) {
-            const currentLine = lineRefs.current[currentActive];
-            if (currentLine) {
-                gsap.set(currentLine, { scaleX: 0, transformOrigin: "right" });
-
-                tl.to(currentLine, {
-                    scaleX: 1,
-                    duration: 0.4,
-                    ease: "power3.out",
-                }, prevActive ? 0.2 : 0);
-            }
-        }
-
-        prevActiveRef.current = currentActive;
-    }, [activeKey]);
 
     
     useEffect(() => {
@@ -308,10 +256,10 @@ export const Navigation = () => {
         };
     }, []);
 
-    const refSetters = useRef({
-        work: (el: HTMLSpanElement | null) => { lineRefs.current.work = el; },
-        about: (el: HTMLSpanElement | null) => { lineRefs.current.about = el; },
-        contact: (el: HTMLSpanElement | null) => { lineRefs.current.contact = el; },
+    const linkRefSetters = useRef({
+        work: (el: HTMLDivElement | null) => { linkRefs.current.work = el; },
+        about: (el: HTMLDivElement | null) => { linkRefs.current.about = el; },
+        contact: (el: HTMLDivElement | null) => { linkRefs.current.contact = el; },
     });
 
     const handleMenuToggle = () => {
@@ -324,35 +272,70 @@ export const Navigation = () => {
     const navAppearDelay = isAtTop ? MENU_ANIMATION_DURATION : 0;
     const menuAppearDelay = !isAtTop ? NAV_ANIMATION_DURATION : 0;
 
-    
     useEffect(() => {
-        if (isFirstRender.current) return;
-        if (prevIsAtTopRef.current === isAtTop) return;
-        prevIsAtTopRef.current = isAtTop;
+        if (!isAtTop) setHoveredKey(null);
+    }, [isAtTop]);
 
-        const currentActive = activeKey;
-        if (!currentActive) return;
+    useEffect(() => {
+        const line = hoverLineRef.current;
+        const list = navListRef.current;
+        if (!line || !list) return;
 
-        const line = lineRefs.current[currentActive];
-        if (!line) return;
+        const navJustAppeared = !prevIsAtTopForLine.current && isAtTop;
+        prevIsAtTopForLine.current = isAtTop;
 
-        gsap.killTweensOf(line, 'opacity');
+        gsap.killTweensOf(line);
 
-        if (!isAtTop) {
-            gsap.to(line, {
-                opacity: 0,
-                duration: 0.3,
-                ease: 'power2.inOut',
-            });
-        } else {
-            gsap.to(line, {
-                opacity: 1,
-                duration: 0.3,
-                delay: navAppearDelay,
-                ease: 'power3.out',
-            });
+        const targetKey = (navJustAppeared ? null : hoveredKey) ?? activeKey;
+
+        if (!isAtTop || !targetKey) {
+            if (lineVisibleRef.current) {
+                lineVisibleRef.current = false;
+                gsap.to(line, {
+                    scaleX: 0,
+                    transformOrigin: 'left',
+                    duration: 0.3,
+                    ease: 'power2.inOut',
+                });
+            }
+            return;
         }
-    }, [isAtTop, activeKey, navAppearDelay]);
+
+        const targetEl = linkRefs.current[targetKey];
+        if (!targetEl) return;
+
+        const listRect = list.getBoundingClientRect();
+        const targetRect = targetEl.getBoundingClientRect();
+        const left = targetRect.left - listRect.left;
+        const width = targetRect.width;
+
+        if (isFirstLineRender.current && activeKey) {
+            isFirstLineRender.current = false;
+            gsap.set(line, { left, width, scaleX: 1 });
+            lineVisibleRef.current = true;
+            return;
+        }
+        isFirstLineRender.current = false;
+
+        const wasVisible = lineVisibleRef.current;
+        lineVisibleRef.current = true;
+
+        if (!wasVisible) {
+            const currentScaleX = parseFloat(String(gsap.getProperty(line, 'scaleX')));
+            if (currentScaleX < 0.01) {
+                gsap.set(line, { left, width, transformOrigin: 'right' });
+            }
+        }
+
+        gsap.to(line, {
+            left,
+            width,
+            scaleX: 1,
+            duration: 0.4,
+            delay: (!wasVisible && navJustAppeared) ? navAppearDelay + 0.15 : 0,
+            ease: 'power3.out',
+        });
+    }, [hoveredKey, activeKey, isAtTop, navAppearDelay]);
 
     return (
         <>
@@ -366,40 +349,44 @@ export const Navigation = () => {
                             </TextReveal>
                         </p>
                     </Link>
-                    <ul className='flex gap-[8dvw] xl:gap-[12.97dvw]'>
-                        <li>
+                    <ul ref={navListRef} className='relative flex gap-[8dvw] xl:gap-[12.97dvw]' onMouseLeave={() => setHoveredKey(null)}>
+                        <li onMouseEnter={() => setHoveredKey('work')}>
                             <NavLink
                                 href="/work"
                                 isActive={activeKey === 'work'}
                                 isTextVisible={isAtTop}
-                                lineRef={refSetters.current.work}
+                                linkRef={linkRefSetters.current.work}
                                 revealDelay={navAppearDelay + 0.05}
                             >
                                 WORK
                             </NavLink>
                         </li>
-                        <li>
+                        <li onMouseEnter={() => setHoveredKey('about')}>
                             <NavLink
                                 href="/about"
                                 isActive={activeKey === 'about'}
                                 isTextVisible={isAtTop}
-                                lineRef={refSetters.current.about}
+                                linkRef={linkRefSetters.current.about}
                                 revealDelay={navAppearDelay + 0.1}
                             >
                                 ABOUT
                             </NavLink>
                         </li>
-                        <li>
+                        <li onMouseEnter={() => setHoveredKey('contact')}>
                             <NavLink
                                 href="/contact"
                                 isActive={activeKey === 'contact'}
                                 isTextVisible={isAtTop}
-                                lineRef={refSetters.current.contact}
+                                linkRef={linkRefSetters.current.contact}
                                 revealDelay={navAppearDelay + 0.15}
                             >
                                 CONTACT ME
                             </NavLink>
                         </li>
+                        <span
+                            ref={hoverLineRef}
+                            className="absolute bottom-0 h-[2px] bg-accent scale-x-0"
+                        />
                     </ul>
                 </div>
             </div>
