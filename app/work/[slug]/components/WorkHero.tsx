@@ -6,7 +6,7 @@ import { ScrollTextReveal } from "@/app/components";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const RANGES = {
-    title:    [0.02, 0.12],
+    title: [0.02, 0.12],
     techCards: [0.06, 0.20],
 } as const;
 
@@ -50,6 +50,7 @@ interface WorkHeroProps {
 
 export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkHeroProps) => {
     const heroRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
     const techCardsRef = useRef<HTMLDivElement>(null);
     const [titleProgress, setTitleProgress] = useState(0);
 
@@ -77,17 +78,40 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
         return () => window.removeEventListener('scroll', update);
     }, [update]);
 
+    useEffect(() => {
+        const targets = [
+            titleRef.current,
+            techCardsRef.current,
+        ].filter(Boolean);
+
+        const tl = gsap.timeline({ delay: 0.3 });
+        tl.fromTo(
+            targets,
+            { opacity: 0, y: 30, filter: 'blur(6px)' },
+            {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                duration: 0.8,
+                stagger: 0.12,
+                ease: 'power3.out',
+            },
+        );
+
+        return () => { tl.kill(); };
+    }, []);
+
     return (
         <div ref={heroRef} className="flex w-full h-[60dvh] lg:h-dvh! items-center justify-center lg:justify-end">
             <img src={bgVideo} alt={title} className="absolute top-0 left-0 w-full h-[60dvh] lg:h-dvh z-[-1] brightness-50 object-cover" />
             <div className="absolute top-0 left-0 w-full h-[60dvh] lg:h-dvh z-0 bg-[#00060A] opacity-60" />
             <div className="mx-4 lg:mx-0 lg:mr-[10.63dvw] mt-0 lg:mt-[20dvh] z-1 flex flex-col items-center lg:items-end">
-                <h1 className="text-center lg:text-right">
+                <h1 ref={titleRef} className="opacity-0 text-center lg:text-right">
                     <ScrollTextReveal progress={titleProgress}>
                         {title}{title2 ? ` ${title2}` : ''}
                     </ScrollTextReveal>
                 </h1>
-                <div ref={techCardsRef} className="flex flex-wrap justify-center lg:justify-end gap-x-3 md:gap-x-[1.88dvw] mt-[3dvh]">
+                <div ref={techCardsRef} className="opacity-0 flex flex-wrap justify-center lg:justify-end gap-x-3 md:gap-x-[1.88dvw] mt-[3dvh]">
                     <TechCard image={techIcons[0]} title={techNames[0]} />
                     <TechCard image={techIcons[1]} title={techNames[1]} />
                     <TechCard image={techIcons[2]} title={techNames[2]} />

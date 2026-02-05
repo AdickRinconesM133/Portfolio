@@ -36,21 +36,20 @@ interface MenuButtonProps {
     isVisible: boolean;
     isOpen: boolean;
     onClick: () => void;
-    
+
     animated?: boolean;
-    
+
     delay?: number;
 }
 
 const MENU_ICON_ANIMATION_DURATION = 0.35;
-const MENU_TOGGLE_TOTAL_DURATION = MENU_ICON_ANIMATION_DURATION * 2 + 0.1; 
+const MENU_TOGGLE_TOTAL_DURATION = MENU_ICON_ANIMATION_DURATION * 2 + 0.1;
 
 const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: MenuButtonProps) => {
     const hamburgerRef = useRef<HTMLSpanElement[]>([]);
     const closeRef = useRef<HTMLSpanElement[]>([]);
     const isFirstRender = useRef(true);
     const prevIsOpen = useRef(isOpen);
-    const [isAnimating, setIsAnimating] = useState(false);
 
     const killAllTweens = () => {
         const hamburgerLines = hamburgerRef.current.filter(Boolean);
@@ -59,7 +58,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
         closeLines.forEach(el => gsap.killTweensOf(el));
     };
 
-    
+
     useEffect(() => {
         const hamburgerLines = hamburgerRef.current.filter(Boolean);
         const closeLines = closeRef.current.filter(Boolean);
@@ -77,7 +76,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
 
         if (!animated) return;
 
-        
+
         killAllTweens();
 
         if (isVisible) {
@@ -114,7 +113,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
         }
     }, [isVisible, animated, delay, isOpen]);
 
-    
+
     useEffect(() => {
         if (isFirstRender.current) return;
         if (prevIsOpen.current === isOpen) return;
@@ -126,9 +125,8 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
         const visibleState = { opacity: 1, y: 0, filter: 'blur(0px)' };
         const hiddenState = { opacity: 0, y: -8, filter: 'blur(4px)' };
 
-        
+
         killAllTweens();
-        setIsAnimating(true);
 
         if (isOpen) {
             gsap.to(hamburgerLines, {
@@ -143,7 +141,6 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
                 delay: MENU_ICON_ANIMATION_DURATION,
                 stagger: { each: 0.04, from: 'end' },
                 ease: 'power3.out',
-                onComplete: () => setIsAnimating(false),
             });
         } else {
             gsap.to(closeLines, {
@@ -158,7 +155,6 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
                 delay: MENU_ICON_ANIMATION_DURATION,
                 stagger: { each: 0.04, from: 'end' },
                 ease: 'power3.out',
-                onComplete: () => setIsAnimating(false),
             });
         }
 
@@ -166,7 +162,6 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
     }, [isOpen, isVisible]);
 
     const handleClick = () => {
-        if (isAnimating) return;
         onClick();
     };
 
@@ -176,7 +171,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
             className="relative flex justify-center items-center w-6 h-6 cursor-pointer"
             aria-label={isOpen ? "Close menu" : "Open menu"}
         >
-            {}
+            { }
             <div className="absolute flex flex-col justify-center items-end gap-[5px]">
                 <span
                     ref={(el) => { if (el) hamburgerRef.current[0] = el; }}
@@ -192,7 +187,7 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
                 />
             </div>
 
-            {}
+            { }
             <div className="absolute flex justify-center items-center">
                 <span
                     ref={(el) => { if (el) closeRef.current[0] = el; }}
@@ -211,12 +206,12 @@ const MenuButton = ({ isVisible, isOpen, onClick, animated = true, delay = 0 }: 
 const SCROLL_THRESHOLD = 50;
 
 
-const NAV_ANIMATION_DURATION = 0.6; 
-const MENU_ANIMATION_DURATION = 0.5; 
+const NAV_ANIMATION_DURATION = 0.6;
+const MENU_ANIMATION_DURATION = 0.5;
 
 export const Navigation = () => {
     const pathname = usePathname();
-    const { isMenuOpen, toggleMenu } = useMenu();
+    const { isMenuOpen, toggleMenu, closeMenu } = useMenu();
     const [isAtTop, setIsAtTop] = useState(true);
     const [hoveredKey, setHoveredKey] = useState<NavKey | null>(null);
 
@@ -231,6 +226,11 @@ export const Navigation = () => {
     const isFirstLineRender = useRef(true);
     const prevIsAtTopForLine = useRef(true);
 
+    const menuContainerRef = useRef<HTMLDivElement>(null);
+    const menuCardRef = useRef<HTMLDivElement>(null);
+    const menuLinksRef = useRef<HTMLDivElement[]>([]);
+    const menuInitRef = useRef(false);
+
     const getActiveKey = (): NavKey | null => {
         if (pathname === "/work" || pathname.startsWith("/work/")) return 'work';
         if (pathname === "/about") return 'about';
@@ -241,13 +241,13 @@ export const Navigation = () => {
     const activeKey = getActiveKey();
 
 
-    
+
     useEffect(() => {
         const handleScroll = () => {
             setIsAtTop(window.scrollY <= SCROLL_THRESHOLD);
         };
 
-        
+
         handleScroll();
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -266,9 +266,9 @@ export const Navigation = () => {
         toggleMenu();
     };
 
-    
-    
-    
+
+
+
     const navAppearDelay = isAtTop ? MENU_ANIMATION_DURATION : 0;
     const menuAppearDelay = !isAtTop ? NAV_ANIMATION_DURATION : 0;
 
@@ -337,9 +337,61 @@ export const Navigation = () => {
         });
     }, [hoveredKey, activeKey, isAtTop, navAppearDelay]);
 
+    useEffect(() => {
+        const container = menuContainerRef.current;
+        const card = menuCardRef.current;
+        if (!container || !card) return;
+
+        const links = menuLinksRef.current.filter(Boolean);
+
+        if (!menuInitRef.current) {
+            menuInitRef.current = true;
+            gsap.set(container, { visibility: 'hidden', pointerEvents: 'none' });
+            gsap.set(card, { opacity: 0, y: 100, filter: 'blur(10px)' });
+            gsap.set(links, { opacity: 0, y: 60, filter: 'blur(10px)' });
+            if (!isMenuOpen) return;
+        }
+
+        gsap.killTweensOf(card);
+        gsap.killTweensOf(links);
+
+        if (isMenuOpen) {
+            gsap.set(container, { visibility: 'visible', pointerEvents: 'auto' });
+            gsap.fromTo(card,
+                { opacity: 0, y: 100, filter: 'blur(10px)' },
+                { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }
+            );
+            gsap.fromTo(links,
+                { opacity: 0, y: 60, filter: 'blur(10px)' },
+                { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power3.out', stagger: 0.08, delay: 0.15 }
+            );
+        } else {
+            gsap.fromTo(links,
+                { opacity: 1, y: 0, filter: 'blur(0px)' },
+                { opacity: 0, y: 60, filter: 'blur(10px)', duration: 0.4, ease: 'power2.inOut', stagger: { each: 0.05, from: 'end' } }
+            );
+            gsap.fromTo(card,
+                { opacity: 1, y: 0, filter: 'blur(0px)' },
+                {
+                    opacity: 0, y: 100, filter: 'blur(10px)', duration: 0.6, delay: 0.15, ease: 'power2.inOut',
+                    onComplete: () => {
+                        gsap.set(container, { visibility: 'hidden', pointerEvents: 'none' });
+                    },
+                }
+            );
+        }
+    }, [isMenuOpen]);
+
+    const menuLinks = [
+        { href: '/', label: 'HOME', isActive: pathname === '/' },
+        { href: '/work', label: 'WORK', isActive: activeKey === 'work' },
+        { href: '/about', label: 'ABOUT', isActive: activeKey === 'about' },
+        { href: '/contact', label: 'CONTACT', isActive: activeKey === 'contact' },
+    ];
+
     return (
         <>
-            {}
+            { }
             <div className={`hidden md:block fixed top-[8.06dvh] left-[3.33dvw] w-[86.04dvw] z-100 text-[0.55rem] lg:text-sm ${!isAtTop ? 'pointer-events-none' : ''}`}>
                 <div className='flex justify-between items-center'>
                     <Link href="/">
@@ -391,22 +443,35 @@ export const Navigation = () => {
                 </div>
             </div>
 
-            {}
+            { }
             <div className={`hidden md:block fixed top-[8.06dvh] right-[3.33dvw] z-100 ${isAtTop ? 'pointer-events-none' : ''}`}>
                 <MenuButton isVisible={!isAtTop} isOpen={isMenuOpen} onClick={handleMenuToggle} delay={menuAppearDelay} />
             </div>
 
-            {}
+            { }
             <div className="md:hidden fixed top-[8.06dvh] right-4 z-100">
                 <MenuButton isVisible={true} isOpen={isMenuOpen} onClick={handleMenuToggle} animated={false} />
             </div>
 
-            {}
-            {isMenuOpen && (
-                <div className="fixed inset-0 z-99 p-2 md:p-[2dvw]">
-                    <div className="w-full h-full rounded-[24px] bg-background/40 backdrop-blur-2xl" />
+            { }
+            <div ref={menuContainerRef} className="fixed inset-0 z-99 p-2 md:p-[2dvw]">
+                <div ref={menuCardRef} className="w-full h-full rounded-[24px] bg-background/40 backdrop-blur-2xl flex-center overflow-hidden">
+                    <nav className="flex flex-col items-center gap-[4dvh]">
+                        {menuLinks.map((item, i) => (
+                            <div key={item.href} ref={el => { if (el) menuLinksRef.current[i] = el; }} className="group">
+                                <Link href={item.href} onClick={closeMenu}>
+                                    <div className="flex flex-col items-center gap-[0.15dvh]">
+                                        <p className={`text-xl md:text-2xl uppercase tracking-widest transition-colors duration-300 ${item.isActive ? 'text-accent' : 'text-foreground'}`}>
+                                            {item.label}
+                                        </p>
+                                        <span className="hidden md:block w-full h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-right" />
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </nav>
                 </div>
-            )}
+            </div>
         </>
     );
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import gsap from "gsap";
 import { useState, useCallback, useEffect, useRef, type FormEvent } from 'react';
 import { ScrollCardReveal, ScrollTextReveal } from '@/app/components';
 
@@ -33,23 +34,27 @@ const FORM_STATUS = {
 type FormStatus = (typeof FORM_STATUS)[keyof typeof FORM_STATUS];
 
 const RANGES = {
-    label:    [0.02, 0.15],
-    title:    [0.06, 0.14],
-    subtitle: [0.10, 0.30],
+  label: [0.02, 0.15],
+  title: [0.06, 0.14],
+  subtitle: [0.10, 0.30],
 } as const;
 
 const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]): number => {
-    if (scrollRatio <= start) return 0;
-    if (scrollRatio >= end) return 1;
-    return (scrollRatio - start) / (end - start);
+  if (scrollRatio <= start) return 0;
+  if (scrollRatio >= end) return 1;
+  return (scrollRatio - start) / (end - start);
 };
 
 export const ContactHero = () => {
   const headerRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLParagraphElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const formSectionRef = useRef<HTMLDivElement>(null);
   const [progresses, setProgresses] = useState({
-      label: 0,
-      title: 0,
-      subtitle: 0,
+    label: 0,
+    title: 0,
+    subtitle: 0,
   });
 
   const [formData, setFormData] = useState({
@@ -61,26 +66,51 @@ export const ContactHero = () => {
   const [status, setStatus] = useState<FormStatus>(FORM_STATUS.IDLE);
 
   const update = useCallback(() => {
-      const el = headerRef.current;
-      if (!el) return;
+    const el = headerRef.current;
+    if (!el) return;
 
-      const viewportHeight = window.innerHeight;
-      if (viewportHeight === 0) return;
+    const viewportHeight = window.innerHeight;
+    if (viewportHeight === 0) return;
 
-      const scrollRatio = window.scrollY / viewportHeight;
+    const scrollRatio = window.scrollY / viewportHeight;
 
-      setProgresses({
-          label: toProgress(scrollRatio, RANGES.label),
-          title: toProgress(scrollRatio, RANGES.title),
-          subtitle: toProgress(scrollRatio, RANGES.subtitle),
-      });
+    setProgresses({
+      label: toProgress(scrollRatio, RANGES.label),
+      title: toProgress(scrollRatio, RANGES.title),
+      subtitle: toProgress(scrollRatio, RANGES.subtitle),
+    });
   }, []);
 
   useEffect(() => {
-      update();
-      window.addEventListener('scroll', update, { passive: true });
-      return () => window.removeEventListener('scroll', update);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
   }, [update]);
+
+  useEffect(() => {
+    const targets = [
+      labelRef.current,
+      titleRef.current,
+      subtitleRef.current,
+      formSectionRef.current,
+    ].filter(Boolean);
+
+    const tl = gsap.timeline({ delay: 0.3 });
+    tl.fromTo(
+      targets,
+      { opacity: 0, y: 30, filter: 'blur(6px)' },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power3.out',
+      },
+    );
+
+    return () => { tl.kill(); };
+  }, []);
 
   const handleChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -128,19 +158,19 @@ export const ContactHero = () => {
   return (
     <div className="flex w-full flex-col">
       <div ref={headerRef} className="mt-24 md:mt-[18.06dvh] ml-4 md:ml-[10.63dvw] margin-right">
-        <p className="text-[0.55rem] lg:text-[0.8rem] text-accent">
+        <p ref={labelRef} className="opacity-0 text-[0.55rem] lg:text-[0.8rem] text-accent">
           <ScrollTextReveal progress={progresses.label}>CONTACT</ScrollTextReveal>
         </p>
-        <h2 className="mt-2 lg:mt-[4dvh]">
+        <h2 ref={titleRef} className="opacity-0 mt-2 lg:mt-[4dvh]">
           <ScrollTextReveal progress={progresses.title}>GOT A</ScrollTextReveal>{' '}
           <ScrollTextReveal progress={progresses.title} className="text-accent">PROJECT?</ScrollTextReveal>
         </h2>
-        <p className="text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4dvh] text-accent uppercase">
+        <p ref={subtitleRef} className="opacity-0 text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4dvh] text-accent uppercase">
           <ScrollTextReveal progress={progresses.subtitle}>Tell me about your vision, and I'll help you bring it to life.</ScrollTextReveal>
         </p>
       </div>
-      <div className="margin-top ml-4 md:ml-[10.63dvw] mr-4 md:mr-0 flex flex-col md:flex-row gap-6 md:gap-x-[4dvw]">
-        <ScrollCardReveal start="top 98%" end="top 70%">
+      <div ref={formSectionRef} className="opacity-0 margin-top ml-4 md:ml-[10.63dvw] mr-4 md:mr-0 flex flex-col md:flex-row gap-6 md:gap-x-[4dvw]">
+        <ScrollCardReveal start="top 98%" end="top 85%">
           <form
             onSubmit={handleSubmit}
             className="bg-background/40 rounded-3xl flex flex-col justify-center gap-[4dvh] p-4 md:p-[3dvw] w-full md:w-[40dvw]"
@@ -185,7 +215,7 @@ export const ContactHero = () => {
             </button>
           </form>
         </ScrollCardReveal>
-        <ScrollCardReveal start="top 98%" end="top 70%">
+        <ScrollCardReveal start="top 98%" end="top 85%">
           <div
             className="bg-background/40 rounded-3xl flex flex-col p-4 md:p-[3dvw] self-start w-full md:w-[37dvw]"
           >

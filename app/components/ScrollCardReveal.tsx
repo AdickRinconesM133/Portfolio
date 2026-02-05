@@ -10,20 +10,19 @@ gsap.registerPlugin(ScrollTrigger);
 interface ScrollCardRevealProps {
     children: ReactNode;
     className?: string;
-    
     start?: string;
-    
     end?: string;
+    leaveStart?: string;
+    leaveEnd?: string;
 }
 
-export const ScrollCardReveal = ({ children, className = '', start = 'top 90%', end = 'top 60%' }: ScrollCardRevealProps) => {
+export const ScrollCardReveal = ({ children, className = '', start = 'top 90%', end = 'top 60%', leaveStart, leaveEnd }: ScrollCardRevealProps) => {
     const elRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const el = elRef.current;
         if (!el) return;
 
-        
         const ctx = gsap.context(() => {
             gsap.fromTo(el,
                 {
@@ -45,6 +44,25 @@ export const ScrollCardReveal = ({ children, className = '', start = 'top 90%', 
                     }
                 }
             );
+
+            if (leaveStart && leaveEnd) {
+                gsap.fromTo(el,
+                    { opacity: 1, y: 0, filter: 'blur(0px)' },
+                    {
+                        opacity: 0,
+                        y: -8,
+                        filter: 'blur(4px)',
+                        duration: 1,
+                        immediateRender: false,
+                        scrollTrigger: {
+                            trigger: el,
+                            start: leaveStart,
+                            end: leaveEnd,
+                            scrub: 1,
+                        }
+                    }
+                );
+            }
         }, elRef);
 
         return () => ctx.revert();

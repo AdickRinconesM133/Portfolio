@@ -5,9 +5,9 @@ import { useEffect, useRef, type ReactNode } from "react";
 
 interface ScrollTextRevealProps {
     children: ReactNode;
-    
+
     progress: number;
-    
+
     className?: string;
 }
 
@@ -37,16 +37,16 @@ export const ScrollTextReveal = ({
         if (wordElements.length === 0) return;
 
         const count = wordElements.length;
-        
+
         const wordRange = 1 / count;
-        const overlap = wordRange * 0.5; 
+        const overlap = wordRange * 0.5;
 
         wordElements.forEach((el, i) => {
-            
+
             const start = i * wordRange;
             const end = Math.min(start + wordRange + overlap, 1);
 
-            
+
             let wordProgress: number;
             if (progress <= start) {
                 wordProgress = 0;

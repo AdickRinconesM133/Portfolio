@@ -1,11 +1,18 @@
 'use client';
 
-import { useMenu } from "@/app/context/MenuContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
+import { useMenu } from "@/app/context/MenuContext";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     const { isMenuOpen } = useMenu();
+    const lenisRef = useRef<Lenis | null>(null);
+    const pathname = usePathname();
 
     useEffect(() => {
         const lenis = new Lenis({
@@ -15,19 +22,47 @@ export const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
             smoothWheel: true,
         });
 
+        lenisRef.current = lenis;
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        const tickerCallback = (time: number) => {
+            lenis.raf(time * 1000);
+        };
+        gsap.ticker.add(tickerCallback);
+        gsap.ticker.lagSmoothing(0);
+
+        return () => {
+            gsap.ticker.remove(tickerCallback);
+            lenis.destroy();
+            lenisRef.current = null;
+        };
+    }, []);
+
+    useEffect(() => {
+        const lenis = lenisRef.current;
+        if (!lenis) return;
+
         if (isMenuOpen) {
             lenis.stop();
+        } else {
+            lenis.start();
         }
-
-        function raf(time: number) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-
-        return () => lenis.destroy();
     }, [isMenuOpen]);
+
+    useEffect(() => {
+        const lenis = lenisRef.current;
+        if (!lenis) return;
+
+        lenis.scrollTo(0, { immediate: true });
+
+        const timeout = setTimeout(() => {
+            lenis.resize();
+            ScrollTrigger.refresh();
+        }, 150);
+
+        return () => clearTimeout(timeout);
+    }, [pathname]);
 
     return <>{children}</>;
 };

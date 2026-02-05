@@ -7,11 +7,11 @@ import { ScrollTextReveal } from "./ScrollTextReveal";
 
 
 const RANGES = {
-    subtitle: [0.02, 0.2],   
-    title:    [0.08, 0.18],   
-    role:     [0.14, 0.24],   
-    techList: [0.18, 0.5],    
-    icons:    [0.24, 0.5],    
+    subtitle: [0.02, 0.2],
+    title: [0.08, 0.18],
+    role: [0.14, 0.24],
+    techList: [0.18, 0.5],
+    icons: [0.24, 0.5],
 } as const;
 
 
@@ -48,6 +48,9 @@ const applyGroupProgress = (elements: Element[], progress: number) => {
 
 export const Hero = () => {
     const heroRef = useRef<HTMLDivElement>(null);
+    const subtitleRef = useRef<HTMLParagraphElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
+    const roleRef = useRef<HTMLHeadingElement>(null);
     const techListRef = useRef<HTMLUListElement>(null);
     const iconsRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +86,33 @@ export const Hero = () => {
         return () => window.removeEventListener('scroll', update);
     }, [update]);
 
-    
+    useEffect(() => {
+        const targets = [
+            subtitleRef.current,
+            titleRef.current,
+            roleRef.current,
+            techListRef.current,
+            iconsRef.current,
+        ].filter(Boolean);
+
+        const tl = gsap.timeline({ delay: 0.3 });
+        tl.fromTo(
+            targets,
+            { opacity: 0, y: 30, filter: 'blur(6px)' },
+            {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                duration: 0.8,
+                stagger: 0.12,
+                ease: 'power3.out',
+            },
+        );
+
+        return () => { tl.kill(); };
+    }, []);
+
+
     useEffect(() => {
         const list = techListRef.current;
         if (!list) return;
@@ -91,7 +120,7 @@ export const Hero = () => {
         applyGroupProgress(items, progresses.techList);
     }, [progresses.techList]);
 
-    
+
     useEffect(() => {
         const icons = iconsRef.current;
         if (!icons) return;
@@ -102,22 +131,22 @@ export const Hero = () => {
     return (
         <div ref={heroRef} className="flex w-full h-dvh overflow-hidden items-center justify-center lg:items-start lg:justify-end">
             <div className="px-4 lg:px-0 lg:mt-[27.87dvh] lg:mr-[10.63dvw]">
-                <p className="text-accent text-[0.55rem] lg:text-s text-right mb-1 lg:mb-[2.2dvh]">
+                <p ref={subtitleRef} className="opacity-0 text-accent text-[0.55rem] lg:text-s text-right mb-1 lg:mb-[2.2dvh]">
                     <ScrollTextReveal progress={progresses.subtitle}>
                         BUILDING THE FUTURE COMMIT BY COMMIT
                     </ScrollTextReveal>
                 </p>
-                <h1 className="text-right text-[6rem]! md:text-[9rem]! lg:text-[13dvw]!">
+                <h1 ref={titleRef} className="opacity-0 text-right text-[6rem]! md:text-[9rem]! lg:text-[13dvw]!">
                     <ScrollTextReveal progress={progresses.title}>
                         SOFTWARE
                     </ScrollTextReveal>
                 </h1>
-                <h3 className="text-right font-bold! font-neuemontreal! tracking-wider mt-[0.5dvh]">
+                <h3 ref={roleRef} className="opacity-0 text-right font-bold! font-neuemontreal! tracking-wider mt-[0.5dvh]">
                     <ScrollTextReveal progress={progresses.role}>
                         ENGINEER
                     </ScrollTextReveal>
                 </h3>
-                <ul ref={techListRef} className="flex flex-wrap mt-2 mb-3 lg:mt-[4dvh] lg:mb-[5dvh] justify-end gap-x-3 md:gap-x-[1.88dvw]">
+                <ul ref={techListRef} className="opacity-0 flex flex-wrap mt-2 mb-3 lg:mt-[4dvh] lg:mb-[5dvh] justify-end gap-x-3 md:gap-x-[1.88dvw]">
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">NEXT.JS</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">RUST</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">PYTHON</li>
@@ -126,7 +155,7 @@ export const Hero = () => {
                     <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">KUBERNETES</li>
                     <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">DOCKER</li>
                 </ul>
-                <div ref={iconsRef} className="flex flex-wrap justify-end gap-x-3 md:gap-x-[1.75dvw]">
+                <div ref={iconsRef} className="opacity-0 flex flex-wrap justify-end gap-x-3 md:gap-x-[1.75dvw]">
                     <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
                         <Image
                             className="w-[2.2dvw] h-[2.2dvw] min-w-4 min-h-4"
