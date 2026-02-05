@@ -102,16 +102,16 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
     }, []);
 
     return (
-        <div ref={heroRef} className="flex w-full h-[60dvh] lg:h-dvh! items-center justify-center lg:justify-end">
-            <img src={bgVideo} alt={title} className="absolute top-0 left-0 w-full h-[60dvh] lg:h-dvh z-[-1] brightness-50 object-cover" />
-            <div className="absolute top-0 left-0 w-full h-[60dvh] lg:h-dvh z-0 bg-[#00060A] opacity-60" />
-            <div className="mx-4 lg:mx-0 lg:mr-[10.63dvw] mt-0 lg:mt-[20dvh] z-1 flex flex-col items-center lg:items-end">
+        <div ref={heroRef} className="flex w-full h-[60lvh] lg:h-lvh! items-center justify-center lg:justify-end">
+            <img src={bgVideo} alt={title} className="absolute top-0 left-0 w-full h-[60lvh] lg:h-lvh z-[-1] brightness-50 object-cover" />
+            <div className="absolute top-0 left-0 w-full h-[60lvh] lg:h-lvh z-0 bg-[#00060A] opacity-60" />
+            <div className="mx-4 lg:mx-0 lg:mr-[10.63dvw] mt-0 lg:mt-[20lvh] z-1 flex flex-col items-center lg:items-end">
                 <h1 ref={titleRef} className="opacity-0 text-center lg:text-right">
                     <ScrollTextReveal progress={titleProgress}>
                         {title}{title2 ? ` ${title2}` : ''}
                     </ScrollTextReveal>
                 </h1>
-                <div ref={techCardsRef} className="opacity-0 flex flex-wrap justify-center lg:justify-end gap-x-3 md:gap-x-[1.88dvw] mt-[3dvh]">
+                <div ref={techCardsRef} className="opacity-0 flex flex-wrap justify-center lg:justify-end gap-x-3 md:gap-x-[1.88dvw] mt-[3lvh]">
                     <TechCard image={techIcons[0]} title={techNames[0]} />
                     <TechCard image={techIcons[1]} title={techNames[1]} />
                     <TechCard image={techIcons[2]} title={techNames[2]} />

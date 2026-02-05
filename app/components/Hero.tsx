@@ -129,9 +129,9 @@ export const Hero = () => {
     }, [progresses.icons]);
 
     return (
-        <div ref={heroRef} className="flex w-full h-dvh overflow-hidden items-center justify-center lg:items-start lg:justify-end">
-            <div className="px-4 lg:px-0 lg:mt-[27.87dvh] lg:mr-[10.63dvw]">
-                <p ref={subtitleRef} className="opacity-0 text-accent text-[0.55rem] lg:text-s text-right mb-1 lg:mb-[2.2dvh]">
+        <div ref={heroRef} className="flex w-full h-lvh overflow-hidden items-center justify-center lg:items-start lg:justify-end">
+            <div className="px-4 lg:px-0 lg:mt-[27.87lvh] lg:mr-[10.63dvw]">
+                <p ref={subtitleRef} className="opacity-0 text-accent text-[0.55rem] lg:text-s text-right mb-1 lg:mb-[2.2lvh]">
                     <ScrollTextReveal progress={progresses.subtitle}>
                         BUILDING THE FUTURE COMMIT BY COMMIT
                     </ScrollTextReveal>
@@ -141,12 +141,12 @@ export const Hero = () => {
                         SOFTWARE
                     </ScrollTextReveal>
                 </h1>
-                <h3 ref={roleRef} className="opacity-0 text-right font-bold! font-neuemontreal! tracking-wider mt-[0.5dvh]">
+                <h3 ref={roleRef} className="opacity-0 text-right font-bold! font-neuemontreal! tracking-wider mt-[0.5lvh]">
                     <ScrollTextReveal progress={progresses.role}>
                         ENGINEER
                     </ScrollTextReveal>
                 </h3>
-                <ul ref={techListRef} className="opacity-0 flex flex-wrap mt-2 mb-3 lg:mt-[4dvh] lg:mb-[5dvh] justify-end gap-x-3 md:gap-x-[1.88dvw]">
+                <ul ref={techListRef} className="opacity-0 flex flex-wrap mt-2 mb-3 lg:mt-[4lvh] lg:mb-[5lvh] justify-end gap-x-3 md:gap-x-[1.88dvw]">
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">NEXT.JS</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">RUST</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">PYTHON</li>

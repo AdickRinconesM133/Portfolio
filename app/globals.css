@@ -86,7 +86,7 @@ h3 {
 }
 
 @utility margin-top {
-  @apply mt-6 lg:mt-[8.06dvh];
+  @apply mt-6 lg:mt-[8.06lvh];
 }
 
 @utility margin-left {

@@ -49,7 +49,7 @@ export const WorkCard = ({
         <div className="margin-left flex-1 flex items-center gap-3 md:gap-[3dvw] pr-4 md:pr-[3.33dvw] py-6 md:py-0 relative z-10">
           <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-[3dvw] w-full md:w-[66%]">
             <div className="flex items-center gap-3 md:gap-[3dvw]">
-              <div className="flex flex-col items-center gap-[0.15dvh]">
+              <div className="flex flex-col items-center gap-[0.15lvh]">
                 <p className="font-league-gothic text-accent text-2xl">
                   {number}
                 </p>
@@ -62,7 +62,7 @@ export const WorkCard = ({
             </div>
             <div className="flex md:hidden items-center gap-3">
               <div
-                className="flex flex-col items-center gap-[0.15dvh] invisible"
+                className="flex flex-col items-center gap-[0.15lvh] invisible"
                 aria-hidden="true"
               >
                 <p className="font-league-gothic text-2xl">00</p>

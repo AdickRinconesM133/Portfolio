@@ -30,10 +30,10 @@ export const AboutStack = () => {
   ];
 
   return (
-    <div className="flex w-full flex-col pb-[15dvh] lg:pb-[6dvh]">
+    <div className="flex w-full flex-col pb-[15lvh] lg:pb-[6lvh]">
       <div className="margin-top mr-4 ml-4 lg:ml-[3.33dvw] lg:mr-[3.23dvw]">
         <ScrollCardReveal>
-          <h2 className="text-right mt-2 mb-2 lg:mt-[4dvh] lg:mb-[4dvh]">
+          <h2 className="text-right mt-2 mb-2 lg:mt-[4lvh] lg:mb-[4lvh]">
             TECH <span className="text-accent">STACK</span>
           </h2>
         </ScrollCardReveal>
@@ -47,7 +47,7 @@ export const AboutStack = () => {
             >
               <Card className="w-full lg:w-full lg:ml-0">
                 <div className="p-4 lg:p-[1.5dvw] flex flex-col h-full">
-                  <p className="text-[0.9rem] text-accent mb-[2dvh]">
+                  <p className="text-[0.9rem] text-accent mb-[2lvh]">
                     {category.title}
                   </p>
                   <div className="flex flex-wrap gap-2 lg:gap-[0.5dvw]">

@@ -5,7 +5,7 @@ import { WorkHeader } from "./WorkHeader"
 
 export const Work = () => {
     return (
-        <div id="work" className="flex w-full flex-col pb-[6dvh]">
+        <div id="work" className="flex w-full flex-col pb-[6lvh]">
             <WorkHeader />
             <div className="margin-top flex flex-col px-4 lg:px-0 lg:ml-[3.33dvw] gap-[4dvw]">
                 {works.map((work, index) => {
@@ -25,7 +25,7 @@ export const Work = () => {
                                 title2={work.title2}
                                 hint={work.hint}
                                 bgVideo={work.bgVideo}
-                                className="w-full lg:w-[93.34dvw] h-auto lg:h-[35dvh]"
+                                className="w-full lg:w-[93.34dvw] h-auto lg:h-[35lvh]"
                                 image={work.techIcons}
                                 techs={work.techNames}
                                 techsShort={work.techNamesShort}

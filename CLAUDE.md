@@ -27,7 +27,7 @@ npm run pages:deploy # Build and deploy to Cloudflare Pages
 - Card components in `/app/components/card/` subdirectory
 
 ### Styling Patterns
-- **Viewport units** (`dvh`, `dvw`) for responsive design
+- **Viewport units** (`lvh`, `dvw`) for responsive design
 - **Custom utilities** in `globals.css` using Tailwind v4 `@utility` syntax:
   - `absolute-center` - centers with transform
   - `flex-center` - flex centering

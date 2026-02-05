@@ -182,7 +182,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
     <>
       <div
         ref={containerRef}
-        className="relative margin-top w-full h-[60dvh] md:h-[90dvh] overflow-hidden flex-center md:cursor-grab md:active:cursor-grabbing select-none md:touch-none pb-[15dvh] lg:pb-0"
+        className="relative margin-top w-full h-[60lvh] md:h-[90lvh] overflow-hidden flex-center md:cursor-grab md:active:cursor-grabbing select-none md:touch-none pb-[15lvh] lg:pb-0"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

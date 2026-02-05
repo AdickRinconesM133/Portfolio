@@ -9,7 +9,7 @@ export const TechCard = ({ image, title, size = "md" }: TechCardProps) => {
         <div className={`flex flex-row items-center justify-center border-[1px] border-accent rounded-full ${
             size === "sm"
                 ? "gap-1 px-2 py-0.5"
-                : "gap-1 md:gap-[0.5dvw] px-2 py-1 md:px-[0.8dvw] md:py-[0.8dvh]"
+                : "gap-1 md:gap-[0.5dvw] px-2 py-1 md:px-[0.8dvw] md:py-[0.8lvh]"
         }`}>
             <img
                 src={image}

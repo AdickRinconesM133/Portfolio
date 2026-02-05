@@ -157,15 +157,15 @@ export const ContactHero = () => {
 
   return (
     <div className="flex w-full flex-col">
-      <div ref={headerRef} className="mt-24 md:mt-[18.06dvh] ml-4 md:ml-[10.63dvw] margin-right">
+      <div ref={headerRef} className="mt-24 md:mt-[18.06lvh] ml-4 md:ml-[10.63dvw] margin-right">
         <p ref={labelRef} className="opacity-0 text-[0.55rem] lg:text-[0.8rem] text-accent">
           <ScrollTextReveal progress={progresses.label}>CONTACT</ScrollTextReveal>
         </p>
-        <h2 ref={titleRef} className="opacity-0 mt-2 lg:mt-[4dvh]">
+        <h2 ref={titleRef} className="opacity-0 mt-2 lg:mt-[4lvh]">
           <ScrollTextReveal progress={progresses.title}>GOT A</ScrollTextReveal>{' '}
           <ScrollTextReveal progress={progresses.title} className="text-accent">PROJECT?</ScrollTextReveal>
         </h2>
-        <p ref={subtitleRef} className="opacity-0 text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4dvh] text-accent uppercase">
+        <p ref={subtitleRef} className="opacity-0 text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4lvh] text-accent uppercase">
           <ScrollTextReveal progress={progresses.subtitle}>Tell me about your vision, and I'll help you bring it to life.</ScrollTextReveal>
         </p>
       </div>
@@ -173,14 +173,14 @@ export const ContactHero = () => {
         <ScrollCardReveal start="top 98%" end="top 85%">
           <form
             onSubmit={handleSubmit}
-            className="bg-background/40 rounded-3xl flex flex-col justify-center gap-[4dvh] p-4 md:p-[3dvw] w-full md:w-[40dvw]"
+            className="bg-background/40 rounded-3xl flex flex-col justify-center gap-[4lvh] p-4 md:p-[3dvw] w-full md:w-[40dvw]"
           >
             {CONTACT_FIELDS.map((field) => (
               <div key={field.name} className="flex items-start gap-[2dvw]">
-                <p className="font-league-gothic text-accent text-2xl leading-none mt-[0.5dvh]">
+                <p className="font-league-gothic text-accent text-2xl leading-none mt-[0.5lvh]">
                   {field.number}
                 </p>
-                <div className="flex-1 flex flex-col gap-[1dvh]">
+                <div className="flex-1 flex flex-col gap-[1lvh]">
                   <label className="text-[0.9rem] tracking-wider">
                     {field.label}{field.required && ' *'}
                   </label>
@@ -191,7 +191,7 @@ export const ContactHero = () => {
                       onChange={(e) => handleChange(field.name, e.target.value)}
                       required={field.required}
                       rows={4}
-                      className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1dvh] outline-none resize-none transition-colors duration-300 focus:border-accent"
+                      className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1lvh] outline-none resize-none transition-colors duration-300 focus:border-accent"
                     />
                   ) : (
                     <input
@@ -200,7 +200,7 @@ export const ContactHero = () => {
                       value={formData[field.name as keyof typeof formData]}
                       onChange={(e) => handleChange(field.name, e.target.value)}
                       required={field.required}
-                      className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1dvh] outline-none transition-colors duration-300 focus:border-accent"
+                      className="bg-transparent border-b border-foreground/20 text-[0.8rem] py-2 md:py-[1lvh] outline-none transition-colors duration-300 focus:border-accent"
                     />
                   )}
                 </div>
@@ -209,7 +209,7 @@ export const ContactHero = () => {
             <button
               type="submit"
               disabled={isSending}
-              className={`border border-accent rounded-full px-6 py-3 md:px-[3dvw] md:py-[1.5dvh] text-[0.55rem] lg:text-xl tracking-wider self-center mt-2 lg:mt-[2dvh] transition-colors duration-300 ${status === FORM_STATUS.SUCCESS ? 'border-green-400 text-green-400' : status === FORM_STATUS.ERROR ? 'border-red-400 text-red-400' : 'text-accent hover:bg-accent hover:text-background'} ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`border border-accent rounded-full px-6 py-3 md:px-[3dvw] md:py-[1.5lvh] text-[0.55rem] lg:text-xl tracking-wider self-center mt-2 lg:mt-[2lvh] transition-colors duration-300 ${status === FORM_STATUS.SUCCESS ? 'border-green-400 text-green-400' : status === FORM_STATUS.ERROR ? 'border-red-400 text-red-400' : 'text-accent hover:bg-accent hover:text-background'} ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {buttonLabel}
             </button>
@@ -219,14 +219,14 @@ export const ContactHero = () => {
           <div
             className="bg-background/40 rounded-3xl flex flex-col p-4 md:p-[3dvw] self-start w-full md:w-[37dvw]"
           >
-            <p className="text-[0.9rem] text-accent mb-[2dvh]">CONTACT DETAILS</p>
+            <p className="text-[0.9rem] text-accent mb-[2lvh]">CONTACT DETAILS</p>
             {CONTACT_DETAILS.map((detail) => (
               <a
                 key={detail.label}
                 href={detail.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-[2dvh] text-[0.8rem]! border border-accent rounded-full px-3 py-1.5 md:px-[0.8vw] md:py-[0.8vh] w-fit transition-colors duration-300 hover:bg-accent hover:text-background"
+                className="mt-[2lvh] text-[0.8rem]! border border-accent rounded-full px-3 py-1.5 md:px-[0.8vw] md:py-[0.8vh] w-fit transition-colors duration-300 hover:bg-accent hover:text-background"
               >
                 {detail.label}
               </a>

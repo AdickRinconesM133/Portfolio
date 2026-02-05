@@ -21,7 +21,7 @@ interface NavLinkProps {
 const NavLink = ({ href, children, isActive, isTextVisible, linkRef, revealDelay = 0 }: NavLinkProps) => {
     return (
         <Link href={href}>
-            <div ref={linkRef} className="flex flex-col items-center pb-[calc(0.15dvh+2px)]">
+            <div ref={linkRef} className="flex flex-col items-center pb-[calc(0.15lvh+2px)]">
                 <p className={`transition-colors duration-300 ${isActive ? 'text-accent' : 'text-foreground'}`}>
                     <TextReveal isVisible={isTextVisible} delay={revealDelay}>
                         {children}
@@ -392,7 +392,7 @@ export const Navigation = () => {
     return (
         <>
             { }
-            <div className={`hidden md:block fixed top-[8.06dvh] left-[3.33dvw] w-[86.04dvw] z-100 text-[0.55rem] lg:text-sm ${!isAtTop ? 'pointer-events-none' : ''}`}>
+            <div className={`hidden md:block fixed top-[8.06lvh] left-[3.33dvw] w-[86.04dvw] z-100 text-[0.55rem] lg:text-sm ${!isAtTop ? 'pointer-events-none' : ''}`}>
                 <div className='flex justify-between items-center'>
                     <Link href="/">
                         <p>
@@ -444,23 +444,23 @@ export const Navigation = () => {
             </div>
 
             { }
-            <div className={`hidden md:block fixed top-[8.06dvh] right-[3.33dvw] z-100 ${isAtTop ? 'pointer-events-none' : ''}`}>
+            <div className={`hidden md:block fixed top-[8.06lvh] right-[3.33dvw] z-100 ${isAtTop ? 'pointer-events-none' : ''}`}>
                 <MenuButton isVisible={!isAtTop} isOpen={isMenuOpen} onClick={handleMenuToggle} delay={menuAppearDelay} />
             </div>
 
             { }
-            <div className="md:hidden fixed top-[8.06dvh] right-4 z-100">
+            <div className="md:hidden fixed top-[8.06lvh] right-4 z-100">
                 <MenuButton isVisible={true} isOpen={isMenuOpen} onClick={handleMenuToggle} animated={false} />
             </div>
 
             { }
             <div ref={menuContainerRef} className="fixed inset-0 z-99 p-2 md:p-[2dvw]">
                 <div ref={menuCardRef} className="w-full h-full rounded-[24px] bg-background/40 backdrop-blur-2xl flex-center overflow-hidden">
-                    <nav className="flex flex-col items-center gap-[4dvh]">
+                    <nav className="flex flex-col items-center gap-[4lvh]">
                         {menuLinks.map((item, i) => (
                             <div key={item.href} ref={el => { if (el) menuLinksRef.current[i] = el; }} className="group">
                                 <Link href={item.href} onClick={closeMenu}>
-                                    <div className="flex flex-col items-center gap-[0.15dvh]">
+                                    <div className="flex flex-col items-center gap-[0.15lvh]">
                                         <p className={`text-xl md:text-2xl uppercase tracking-widest transition-colors duration-300 ${item.isActive ? 'text-accent' : 'text-foreground'}`}>
                                             {item.label}
                                         </p>

@@ -37,7 +37,7 @@ export const Footer = () => {
     }, []);
 
     return (
-        <div ref={footerRef} className="flex flex-row justify-between items-center w-full h-[15dvh] overflow-hidden px-4 md:px-[13.96dvw]">
+        <div ref={footerRef} className="flex flex-row justify-between items-center w-full h-[15lvh] overflow-hidden px-4 md:px-[13.96dvw]">
             <div className="text-[0.8rem]">
                 <p>© 2026 ADICK RINCONES</p>
             </div>
