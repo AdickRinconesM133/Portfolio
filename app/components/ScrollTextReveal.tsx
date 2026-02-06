@@ -2,6 +2,7 @@
 
 import gsap from "gsap";
 import { useEffect, useRef, type ReactNode } from "react";
+import { getText, SCROLL_OUT } from "@/app/lib/animation";
 
 interface ScrollTextRevealProps {
     children: ReactNode;
@@ -18,16 +19,6 @@ export const ScrollTextReveal = ({
     className = '',
 }: ScrollTextRevealProps) => {
     const wordsRef = useRef<HTMLSpanElement[]>([]);
-
-    const getText = (node: ReactNode): string => {
-        if (typeof node === 'string') return node;
-        if (typeof node === 'number') return String(node);
-        if (Array.isArray(node)) return node.map(getText).join('');
-        if (node && typeof node === 'object' && 'props' in node) {
-            return getText((node as any).props.children);
-        }
-        return '';
-    };
 
     const text = getText(children);
     const words = text.split(' ').filter(Boolean);
@@ -58,8 +49,8 @@ export const ScrollTextReveal = ({
 
             gsap.set(el, {
                 opacity: 1 - wordProgress,
-                y: -8 * wordProgress,
-                filter: `blur(${4 * wordProgress}px)`,
+                y: SCROLL_OUT.y * wordProgress,
+                filter: `blur(${SCROLL_OUT.blur * wordProgress}px)`,
             });
         });
     }, [progress]);

@@ -1,10 +1,11 @@
 'use client';
 
-import gsap from "gsap";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ScrollTextReveal } from "./ScrollTextReveal";
 import { useLoading } from "@/app/context/LoadingContext";
+import { applyGroupProgress } from "@/app/lib/animation";
+import { useScrollProgress, useEntryTimeline } from "@/app/hooks";
 
 
 const RANGES = {
@@ -16,37 +17,6 @@ const RANGES = {
 } as const;
 
 
-const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]): number => {
-    if (scrollRatio <= start) return 0;
-    if (scrollRatio >= end) return 1;
-    return (scrollRatio - start) / (end - start);
-};
-
-
-const applyGroupProgress = (elements: Element[], progress: number) => {
-    const count = elements.length;
-    if (count === 0) return;
-
-    const wordRange = 1 / count;
-    const overlap = wordRange * 0.3;
-
-    elements.forEach((el, i) => {
-        const start = i * wordRange;
-        const end = Math.min(start + wordRange + overlap, 1);
-
-        let p: number;
-        if (progress <= start) p = 0;
-        else if (progress >= end) p = 1;
-        else p = (progress - start) / (end - start);
-
-        gsap.set(el, {
-            opacity: 1 - p,
-            y: -8 * p,
-            filter: `blur(${4 * p}px)`,
-        });
-    });
-};
-
 export const Hero = () => {
     const { isLoading } = useLoading();
     const heroRef = useRef<HTMLDivElement>(null);
@@ -56,65 +26,10 @@ export const Hero = () => {
     const techListRef = useRef<HTMLUListElement>(null);
     const iconsRef = useRef<HTMLDivElement>(null);
 
-    const [progresses, setProgresses] = useState({
-        subtitle: 0,
-        title: 0,
-        role: 0,
-        techList: 0,
-        icons: 0,
-    });
+    const progresses = useScrollProgress(heroRef, RANGES, { divisor: 'element' });
 
-    const update = useCallback(() => {
-        const el = heroRef.current;
-        if (!el) return;
-
-        const heroHeight = el.offsetHeight;
-        if (heroHeight === 0) return;
-
-        const scrollRatio = window.scrollY / heroHeight;
-
-        setProgresses({
-            subtitle: toProgress(scrollRatio, RANGES.subtitle),
-            title: toProgress(scrollRatio, RANGES.title),
-            role: toProgress(scrollRatio, RANGES.role),
-            techList: toProgress(scrollRatio, RANGES.techList),
-            icons: toProgress(scrollRatio, RANGES.icons),
-        });
-    }, []);
-
-    useEffect(() => {
-        update();
-        window.addEventListener('scroll', update, { passive: true });
-        return () => window.removeEventListener('scroll', update);
-    }, [update]);
-
-    useEffect(() => {
-        if (isLoading) return;
-
-        const targets = [
-            subtitleRef.current,
-            titleRef.current,
-            roleRef.current,
-            techListRef.current,
-            iconsRef.current,
-        ].filter(Boolean);
-
-        const tl = gsap.timeline({ delay: 0.3 });
-        tl.fromTo(
-            targets,
-            { opacity: 0, y: 30, filter: 'blur(6px)' },
-            {
-                opacity: 1,
-                y: 0,
-                filter: 'blur(0px)',
-                duration: 0.8,
-                stagger: 0.12,
-                ease: 'power3.out',
-            },
-        );
-
-        return () => { tl.kill(); };
-    }, [isLoading]);
+    const entryRefs = [subtitleRef, titleRef, roleRef, techListRef, iconsRef];
+    useEntryTimeline(entryRefs, isLoading);
 
 
     useEffect(() => {

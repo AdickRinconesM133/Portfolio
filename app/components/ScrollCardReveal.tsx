@@ -2,7 +2,8 @@
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ReactNode, useEffect, useRef } from 'react';
+import { type ReactNode, useEffect, useRef } from 'react';
+import { CARD_ENTRY, SCROLL_OUT } from '@/app/lib/animation';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,15 +26,9 @@ export const ScrollCardReveal = ({ children, className = '', start = 'top 90%', 
 
         const ctx = gsap.context(() => {
             gsap.fromTo(el,
+                CARD_ENTRY.from,
                 {
-                    opacity: 0,
-                    y: 100,
-                    filter: 'blur(10px)',
-                },
-                {
-                    opacity: 1,
-                    y: 0,
-                    filter: 'blur(0px)',
+                    ...CARD_ENTRY.to,
                     duration: 1,
                     scrollTrigger: {
                         trigger: el,
@@ -47,11 +42,9 @@ export const ScrollCardReveal = ({ children, className = '', start = 'top 90%', 
 
             if (leaveStart && leaveEnd) {
                 gsap.fromTo(el,
-                    { opacity: 1, y: 0, filter: 'blur(0px)' },
+                    SCROLL_OUT.visible,
                     {
-                        opacity: 0,
-                        y: -8,
-                        filter: 'blur(4px)',
+                        ...SCROLL_OUT.hidden,
                         duration: 1,
                         immediateRender: false,
                         scrollTrigger: {

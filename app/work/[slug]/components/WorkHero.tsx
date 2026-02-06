@@ -1,45 +1,16 @@
 'use client';
 
-import gsap from "gsap";
+import { useEffect, useRef } from "react";
 import { TechCard } from "@/app/components/card";
 import { ScrollTextReveal } from "@/app/components";
 import { useLoading } from "@/app/context/LoadingContext";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { applyGroupProgress } from "@/app/lib/animation";
+import { useScrollProgress, useEntryTimeline } from "@/app/hooks";
 
 const RANGES = {
     title: [0.02, 0.12],
     techCards: [0.06, 0.20],
 } as const;
-
-const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]): number => {
-    if (scrollRatio <= start) return 0;
-    if (scrollRatio >= end) return 1;
-    return (scrollRatio - start) / (end - start);
-};
-
-const applyGroupProgress = (elements: Element[], progress: number) => {
-    const count = elements.length;
-    if (count === 0) return;
-
-    const wordRange = 1 / count;
-    const overlap = wordRange * 0.3;
-
-    elements.forEach((el, i) => {
-        const start = i * wordRange;
-        const end = Math.min(start + wordRange + overlap, 1);
-
-        let p: number;
-        if (progress <= start) p = 0;
-        else if (progress >= end) p = 1;
-        else p = (progress - start) / (end - start);
-
-        gsap.set(el, {
-            opacity: 1 - p,
-            y: -8 * p,
-            filter: `blur(${4 * p}px)`,
-        });
-    });
-};
 
 interface WorkHeroProps {
     title: string
@@ -54,56 +25,18 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
     const heroRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const techCardsRef = useRef<HTMLDivElement>(null);
-    const [titleProgress, setTitleProgress] = useState(0);
 
-    const update = useCallback(() => {
-        const el = heroRef.current;
-        if (!el) return;
+    const progresses = useScrollProgress(heroRef, RANGES, { divisor: 'element' });
 
-        const heroHeight = el.offsetHeight;
-        if (heroHeight === 0) return;
+    const entryRefs = [titleRef, techCardsRef];
+    useEntryTimeline(entryRefs, isLoading);
 
-        const scrollRatio = window.scrollY / heroHeight;
-
-        setTitleProgress(toProgress(scrollRatio, RANGES.title));
-
+    useEffect(() => {
         const techContainer = techCardsRef.current;
-        if (techContainer) {
-            const cards = Array.from(techContainer.children);
-            applyGroupProgress(cards, toProgress(scrollRatio, RANGES.techCards));
-        }
-    }, []);
-
-    useEffect(() => {
-        update();
-        window.addEventListener('scroll', update, { passive: true });
-        return () => window.removeEventListener('scroll', update);
-    }, [update]);
-
-    useEffect(() => {
-        if (isLoading) return;
-
-        const targets = [
-            titleRef.current,
-            techCardsRef.current,
-        ].filter(Boolean);
-
-        const tl = gsap.timeline({ delay: 0.3 });
-        tl.fromTo(
-            targets,
-            { opacity: 0, y: 30, filter: 'blur(6px)' },
-            {
-                opacity: 1,
-                y: 0,
-                filter: 'blur(0px)',
-                duration: 0.8,
-                stagger: 0.12,
-                ease: 'power3.out',
-            },
-        );
-
-        return () => { tl.kill(); };
-    }, [isLoading]);
+        if (!techContainer) return;
+        const cards = Array.from(techContainer.children);
+        applyGroupProgress(cards, progresses.techCards);
+    }, [progresses.techCards]);
 
     return (
         <div ref={heroRef} className="relative flex w-full h-lvh items-center justify-center lg:justify-end overflow-visible">
@@ -119,7 +52,7 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
             </div>
             <div className="mx-4 lg:mx-0 lg:mr-[10.63dvw] mt-0 lg:mt-[20lvh] z-1 flex flex-col items-center lg:items-end">
                 <h1 ref={titleRef} className="opacity-0 text-center lg:text-right">
-                    <ScrollTextReveal progress={titleProgress}>
+                    <ScrollTextReveal progress={progresses.title}>
                         {title}{title2 ? ` ${title2}` : ''}
                     </ScrollTextReveal>
                 </h1>

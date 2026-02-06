@@ -1,18 +1,19 @@
 'use client';
 
 import gsap from "gsap";
-import { isValidElement, useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { getText, SCROLL_OUT } from "@/app/lib/animation";
 
 interface TextRevealProps {
     children: ReactNode;
     isVisible: boolean;
-    
+
     duration?: number;
-    
+
     stagger?: number;
-    
+
     delay?: number;
-    
+
     className?: string;
 }
 
@@ -29,17 +30,6 @@ export const TextReveal = ({
     const wordsRef = useRef<HTMLSpanElement[]>([]);
     const isFirstRender = useRef(true);
 
-    
-    const getText = (node: ReactNode): string => {
-        if (typeof node === 'string') return node;
-        if (typeof node === 'number') return String(node);
-        if (Array.isArray(node)) return node.map(getText).join('');
-        if (isValidElement<{ children?: ReactNode }>(node)) {
-            return getText(node.props.children);
-        }
-        return '';
-    };
-
     const text = getText(children);
     const words = text.split(' ').filter(Boolean);
 
@@ -47,21 +37,18 @@ export const TextReveal = ({
         const wordElements = wordsRef.current.filter(Boolean);
         if (wordElements.length === 0) return;
 
-        const visibleState = { opacity: 1, y: 0, filter: 'blur(0px)' };
-        const hiddenState = { opacity: 0, y: -8, filter: 'blur(4px)' };
-
         if (isFirstRender.current) {
             isFirstRender.current = false;
-            gsap.set(wordElements, isVisible ? visibleState : hiddenState);
+            gsap.set(wordElements, isVisible ? SCROLL_OUT.visible : SCROLL_OUT.hidden);
             return;
         }
 
-        
+
         wordElements.forEach(el => gsap.killTweensOf(el));
 
         if (isVisible) {
             gsap.to(wordElements, {
-                ...visibleState,
+                ...SCROLL_OUT.visible,
                 duration,
                 delay,
                 stagger: {
@@ -72,7 +59,7 @@ export const TextReveal = ({
             });
         } else {
             gsap.to(wordElements, {
-                ...hiddenState,
+                ...SCROLL_OUT.hidden,
                 duration,
                 stagger: {
                     each: stagger,

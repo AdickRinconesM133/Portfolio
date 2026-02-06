@@ -7,6 +7,7 @@ import { works } from "@/app/data/works"
 import { WorkHeader } from "./WorkHeader"
 import { useLoading } from "@/app/context/LoadingContext"
 import { useEffect, useRef } from "react"
+import { CARD_ENTRY } from "@/app/lib/animation"
 
 const MOBILE_BREAKPOINT = 1024;
 
@@ -26,11 +27,9 @@ export const Work = () => {
         const tl = gsap.timeline({ delay: 0.3 });
         tl.fromTo(
             targets,
-            { opacity: 0, y: 100, filter: 'blur(10px)' },
+            CARD_ENTRY.from,
             {
-                opacity: 1,
-                y: 0,
-                filter: 'blur(0px)',
+                ...CARD_ENTRY.to,
                 duration: 0.8,
                 stagger: 0.15,
                 ease: 'power3.out',

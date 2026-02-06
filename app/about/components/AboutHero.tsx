@@ -1,22 +1,16 @@
 'use client';
 
-import gsap from "gsap";
+import { useRef } from "react";
 import { Card } from "@/app/components/card";
 import { ScrollCardReveal, ScrollTextReveal } from "@/app/components";
 import { useLoading } from "@/app/context/LoadingContext";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useScrollProgress, useEntryTimeline } from "@/app/hooks";
 
 const RANGES = {
     label: [0.02, 0.15],
     name: [0.06, 0.14],
     tagline: [0.10, 0.30],
 } as const;
-
-const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]): number => {
-    if (scrollRatio <= start) return 0;
-    if (scrollRatio >= end) return 1;
-    return (scrollRatio - start) / (end - start);
-};
 
 export const AboutHero = () => {
     const { isLoading } = useLoading();
@@ -25,60 +19,11 @@ export const AboutHero = () => {
     const nameRef = useRef<HTMLHeadingElement>(null);
     const taglineRef = useRef<HTMLParagraphElement>(null);
     const cardSectionRef = useRef<HTMLDivElement>(null);
-    const [progresses, setProgresses] = useState({
-        label: 0,
-        name: 0,
-        tagline: 0,
-    });
 
-    const update = useCallback(() => {
-        const el = headerRef.current;
-        if (!el) return;
+    const progresses = useScrollProgress(headerRef, RANGES, { divisor: 'viewport' });
 
-        const viewportHeight = window.innerHeight;
-        if (viewportHeight === 0) return;
-
-        const scrollRatio = window.scrollY / viewportHeight;
-
-        setProgresses({
-            label: toProgress(scrollRatio, RANGES.label),
-            name: toProgress(scrollRatio, RANGES.name),
-            tagline: toProgress(scrollRatio, RANGES.tagline),
-        });
-    }, []);
-
-    useEffect(() => {
-        update();
-        window.addEventListener('scroll', update, { passive: true });
-        return () => window.removeEventListener('scroll', update);
-    }, [update]);
-
-    useEffect(() => {
-        if (isLoading) return;
-
-        const targets = [
-            labelRef.current,
-            nameRef.current,
-            taglineRef.current,
-            cardSectionRef.current,
-        ].filter(Boolean);
-
-        const tl = gsap.timeline({ delay: 0.3 });
-        tl.fromTo(
-            targets,
-            { opacity: 0, y: 30, filter: 'blur(6px)' },
-            {
-                opacity: 1,
-                y: 0,
-                filter: 'blur(0px)',
-                duration: 0.8,
-                stagger: 0.12,
-                ease: 'power3.out',
-            },
-        );
-
-        return () => { tl.kill(); };
-    }, [isLoading]);
+    const entryRefs = [labelRef, nameRef, taglineRef, cardSectionRef];
+    useEntryTimeline(entryRefs, isLoading);
 
     return (
         <div className="flex flex-col w-full pb-[15lvh] lg:pb-0">

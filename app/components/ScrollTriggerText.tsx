@@ -3,6 +3,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, type ReactNode } from "react";
+import { getText, SCROLL_OUT } from "@/app/lib/animation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,16 +20,6 @@ export const ScrollTriggerText = ({
     const containerRef = useRef<HTMLSpanElement>(null);
     const wordsRef = useRef<HTMLSpanElement[]>([]);
 
-    const getText = (node: ReactNode): string => {
-        if (typeof node === 'string') return node;
-        if (typeof node === 'number') return String(node);
-        if (Array.isArray(node)) return node.map(getText).join('');
-        if (node && typeof node === 'object' && 'props' in node) {
-            return getText((node as any).props.children);
-        }
-        return '';
-    };
-
     const text = getText(children);
     const words = text.split(' ').filter(Boolean);
 
@@ -38,17 +29,10 @@ export const ScrollTriggerText = ({
         if (!el || wordElements.length === 0) return;
 
         const ctx = gsap.context(() => {
-            
-            gsap.set(wordElements, {
-                opacity: 0,
-                y: -8,
-                filter: 'blur(4px)'
-            });
+            gsap.set(wordElements, SCROLL_OUT.hidden);
 
             gsap.to(wordElements, {
-                opacity: 1,
-                y: 0,
-                filter: 'blur(0px)',
+                ...SCROLL_OUT.visible,
                 stagger: 0.1,
                 scrollTrigger: {
                     trigger: el,
