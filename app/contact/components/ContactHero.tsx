@@ -3,6 +3,7 @@
 import gsap from "gsap";
 import { useState, useCallback, useEffect, useRef, type FormEvent } from 'react';
 import { ScrollCardReveal, ScrollTextReveal } from '@/app/components';
+import { useLoading } from "@/app/context/LoadingContext";
 
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? '';
 
@@ -46,6 +47,8 @@ const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]
 };
 
 export const ContactHero = () => {
+  const { isLoading } = useLoading();
+  const hasAnimated = useRef(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -88,6 +91,9 @@ export const ContactHero = () => {
   }, [update]);
 
   useEffect(() => {
+    if (isLoading || hasAnimated.current) return;
+    hasAnimated.current = true;
+
     const targets = [
       labelRef.current,
       titleRef.current,
@@ -110,7 +116,7 @@ export const ContactHero = () => {
     );
 
     return () => { tl.kill(); };
-  }, []);
+  }, [isLoading]);
 
   const handleChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));

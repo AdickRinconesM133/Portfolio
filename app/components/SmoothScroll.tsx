@@ -6,11 +6,13 @@ import Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useMenu } from "@/app/context/MenuContext";
+import { useLoading } from "@/app/context/LoadingContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     const { isMenuOpen } = useMenu();
+    const { isLoading } = useLoading();
     const lenisRef = useRef<Lenis | null>(null);
     const pathname = usePathname();
 
@@ -43,12 +45,12 @@ export const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
         const lenis = lenisRef.current;
         if (!lenis) return;
 
-        if (isMenuOpen) {
+        if (isMenuOpen || isLoading) {
             lenis.stop();
         } else {
             lenis.start();
         }
-    }, [isMenuOpen]);
+    }, [isMenuOpen, isLoading]);
 
     useEffect(() => {
         const lenis = lenisRef.current;

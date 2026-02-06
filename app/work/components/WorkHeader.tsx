@@ -2,6 +2,7 @@
 
 import gsap from "gsap";
 import { ScrollTextReveal } from "@/app/components";
+import { useLoading } from "@/app/context/LoadingContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const RANGES = {
@@ -17,6 +18,8 @@ const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]
 };
 
 export const WorkHeader = () => {
+    const { isLoading } = useLoading();
+    const hasAnimated = useRef(false);
     const headerRef = useRef<HTMLDivElement>(null);
     const labelRef = useRef<HTMLParagraphElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
@@ -50,6 +53,9 @@ export const WorkHeader = () => {
     }, [update]);
 
     useEffect(() => {
+        if (isLoading || hasAnimated.current) return;
+        hasAnimated.current = true;
+
         const targets = [
             labelRef.current,
             titleRef.current,
@@ -71,7 +77,7 @@ export const WorkHeader = () => {
         );
 
         return () => { tl.kill(); };
-    }, []);
+    }, [isLoading]);
 
     return (
         <div ref={headerRef} className="mt-24 md:mt-[18.06lvh] margin-left margin-right">

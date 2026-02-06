@@ -3,6 +3,7 @@
 import gsap from "gsap";
 import { Card } from "@/app/components/card";
 import { ScrollCardReveal, ScrollTextReveal } from "@/app/components";
+import { useLoading } from "@/app/context/LoadingContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const RANGES = {
@@ -18,6 +19,8 @@ const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]
 };
 
 export const AboutHero = () => {
+    const { isLoading } = useLoading();
+    const hasAnimated = useRef(false);
     const headerRef = useRef<HTMLDivElement>(null);
     const labelRef = useRef<HTMLParagraphElement>(null);
     const nameRef = useRef<HTMLHeadingElement>(null);
@@ -52,6 +55,9 @@ export const AboutHero = () => {
     }, [update]);
 
     useEffect(() => {
+        if (isLoading || hasAnimated.current) return;
+        hasAnimated.current = true;
+
         const targets = [
             labelRef.current,
             nameRef.current,
@@ -74,7 +80,7 @@ export const AboutHero = () => {
         );
 
         return () => { tl.kill(); };
-    }, []);
+    }, [isLoading]);
 
     return (
         <div className="flex flex-col w-full pb-[15lvh] lg:pb-0">

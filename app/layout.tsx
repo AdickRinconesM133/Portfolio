@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { League_Gothic } from "next/font/google";
 import localFont from "next/font/local";
-import { Background, LayoutContent, Navigation, SmoothScroll } from "./components/index";
+import { Background, LayoutContent, LoadingScreen, Navigation, SmoothScroll } from "./components/index";
 import { MenuProvider } from "./context/MenuContext";
+import { LoadingProvider } from "./context/LoadingContext";
 import "./globals.css";
 
 const league_gothic = League_Gothic({
@@ -41,13 +42,16 @@ export default function RootLayout({
       <body
         className={`${league_gothic.variable} ${neuemontreal.variable} antialiased`}
       >
-        <MenuProvider>
-          <SmoothScroll>
-            <Background />
-            <Navigation />
-            <LayoutContent>{children}</LayoutContent>
-          </SmoothScroll>
-        </MenuProvider>
+        <LoadingProvider>
+          <MenuProvider>
+            <SmoothScroll>
+              <Background />
+              <Navigation />
+              <LayoutContent>{children}</LayoutContent>
+            </SmoothScroll>
+            <LoadingScreen />
+          </MenuProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

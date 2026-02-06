@@ -1,6 +1,7 @@
 'use client';
 
 import { useMenu } from "@/app/context/MenuContext";
+import { useLoading } from "@/app/context/LoadingContext";
 import gsap from "gsap";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -212,6 +213,7 @@ const MENU_ANIMATION_DURATION = 0.5;
 export const Navigation = () => {
     const pathname = usePathname();
     const { isMenuOpen, toggleMenu, closeMenu } = useMenu();
+    const { isLoading } = useLoading();
     const [isAtTop, setIsAtTop] = useState(true);
     const [hoveredKey, setHoveredKey] = useState<NavKey | null>(null);
 
@@ -396,7 +398,7 @@ export const Navigation = () => {
                 <div className='flex justify-between items-center'>
                     <Link href="/">
                         <p>
-                            <TextReveal isVisible={isAtTop} delay={navAppearDelay}>
+                            <TextReveal isVisible={isAtTop && !isLoading} delay={navAppearDelay}>
                                 CODE BY ADICK
                             </TextReveal>
                         </p>
@@ -406,7 +408,7 @@ export const Navigation = () => {
                             <NavLink
                                 href="/work"
                                 isActive={activeKey === 'work'}
-                                isTextVisible={isAtTop}
+                                isTextVisible={isAtTop && !isLoading}
                                 linkRef={linkRefSetters.current.work}
                                 revealDelay={navAppearDelay + 0.05}
                             >
@@ -417,7 +419,7 @@ export const Navigation = () => {
                             <NavLink
                                 href="/about"
                                 isActive={activeKey === 'about'}
-                                isTextVisible={isAtTop}
+                                isTextVisible={isAtTop && !isLoading}
                                 linkRef={linkRefSetters.current.about}
                                 revealDelay={navAppearDelay + 0.1}
                             >
@@ -428,7 +430,7 @@ export const Navigation = () => {
                             <NavLink
                                 href="/contact"
                                 isActive={activeKey === 'contact'}
-                                isTextVisible={isAtTop}
+                                isTextVisible={isAtTop && !isLoading}
                                 linkRef={linkRefSetters.current.contact}
                                 revealDelay={navAppearDelay + 0.15}
                             >
@@ -449,12 +451,12 @@ export const Navigation = () => {
             </div>
 
             { }
-            <div className="md:hidden fixed top-[8.06lvh] right-4 z-100">
+            <div className={`md:hidden fixed top-[8.06lvh] right-4 z-100 transition-opacity duration-300 ${isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <MenuButton isVisible={true} isOpen={isMenuOpen} onClick={handleMenuToggle} animated={false} />
             </div>
 
             { }
-            <div ref={menuContainerRef} className="fixed inset-0 z-99 p-2 md:p-[2dvw]">
+            <div ref={menuContainerRef} className="invisible fixed inset-0 z-99 p-2 md:p-[2dvw]">
                 <div ref={menuCardRef} className="w-full h-full rounded-[24px] bg-background/40 backdrop-blur-2xl flex-center overflow-hidden">
                     <nav className="flex flex-col items-center gap-[4lvh]">
                         {menuLinks.map((item, i) => (

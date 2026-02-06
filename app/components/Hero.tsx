@@ -4,6 +4,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollTextReveal } from "./ScrollTextReveal";
+import { useLoading } from "@/app/context/LoadingContext";
 
 
 const RANGES = {
@@ -47,6 +48,8 @@ const applyGroupProgress = (elements: Element[], progress: number) => {
 };
 
 export const Hero = () => {
+    const { isLoading } = useLoading();
+    const hasAnimated = useRef(false);
     const heroRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
@@ -87,6 +90,9 @@ export const Hero = () => {
     }, [update]);
 
     useEffect(() => {
+        if (isLoading || hasAnimated.current) return;
+        hasAnimated.current = true;
+
         const targets = [
             subtitleRef.current,
             titleRef.current,
@@ -110,7 +116,7 @@ export const Hero = () => {
         );
 
         return () => { tl.kill(); };
-    }, []);
+    }, [isLoading]);
 
 
     useEffect(() => {
@@ -131,22 +137,22 @@ export const Hero = () => {
     return (
         <div ref={heroRef} className="flex w-full h-lvh overflow-hidden items-center justify-center lg:items-start lg:justify-end">
             <div className="px-4 lg:px-0 lg:mt-[27.87lvh] lg:mr-[10.63dvw]">
-                <p ref={subtitleRef} className="opacity-0 text-accent text-[0.55rem] lg:text-s text-right mb-1 lg:mb-[2.2lvh]">
+                <p ref={subtitleRef} className="opacity-0 text-accent text-[0.55rem] lg:text-s text-center lg:text-right mb-1 lg:mb-[2.2lvh]">
                     <ScrollTextReveal progress={progresses.subtitle}>
                         BUILDING THE FUTURE COMMIT BY COMMIT
                     </ScrollTextReveal>
                 </p>
-                <h1 ref={titleRef} className="opacity-0 text-right text-[6rem]! md:text-[9rem]! lg:text-[13dvw]!">
+                <h1 ref={titleRef} className="opacity-0 text-center lg:text-right text-[6rem]! md:text-[9rem]! lg:text-[13dvw]!">
                     <ScrollTextReveal progress={progresses.title}>
                         SOFTWARE
                     </ScrollTextReveal>
                 </h1>
-                <h3 ref={roleRef} className="opacity-0 text-right font-bold! font-neuemontreal! tracking-wider mt-[0.5lvh]">
+                <h3 ref={roleRef} className="opacity-0 text-center lg:text-right font-bold! font-neuemontreal! tracking-wider mt-[0.5lvh]">
                     <ScrollTextReveal progress={progresses.role}>
                         ENGINEER
                     </ScrollTextReveal>
                 </h3>
-                <ul ref={techListRef} className="opacity-0 flex flex-wrap mt-2 mb-3 lg:mt-[4lvh] lg:mb-[5lvh] justify-end gap-x-3 md:gap-x-[1.88dvw]">
+                <ul ref={techListRef} className="opacity-0 flex flex-wrap mt-2 mb-3 lg:mt-[4lvh] lg:mb-[5lvh] justify-center lg:justify-end gap-x-3 md:gap-x-[1.88dvw]">
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">NEXT.JS</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">RUST</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">PYTHON</li>
@@ -155,7 +161,7 @@ export const Hero = () => {
                     <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">KUBERNETES</li>
                     <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">DOCKER</li>
                 </ul>
-                <div ref={iconsRef} className="opacity-0 flex flex-wrap justify-end gap-x-3 md:gap-x-[1.75dvw]">
+                <div ref={iconsRef} className="opacity-0 flex flex-wrap justify-center lg:justify-end gap-x-3 md:gap-x-[1.75dvw]">
                     <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
                         <Image
                             className="w-[2.2dvw] h-[2.2dvw] min-w-4 min-h-4"

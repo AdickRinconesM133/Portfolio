@@ -11,3 +11,4 @@ export * from "./LayoutContent";
 export * from "./SmoothScroll";
 export * from "./ScrollCardReveal";
 export * from "./ScrollTriggerText";
+export * from "./LoadingScreen";

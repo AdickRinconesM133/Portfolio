@@ -3,6 +3,7 @@
 import gsap from "gsap";
 import { TechCard } from "@/app/components/card";
 import { ScrollTextReveal } from "@/app/components";
+import { useLoading } from "@/app/context/LoadingContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const RANGES = {
@@ -49,6 +50,8 @@ interface WorkHeroProps {
 }
 
 export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkHeroProps) => {
+    const { isLoading } = useLoading();
+    const hasAnimated = useRef(false);
     const heroRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const techCardsRef = useRef<HTMLDivElement>(null);
@@ -79,6 +82,9 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
     }, [update]);
 
     useEffect(() => {
+        if (isLoading || hasAnimated.current) return;
+        hasAnimated.current = true;
+
         const targets = [
             titleRef.current,
             techCardsRef.current,
@@ -99,12 +105,12 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
         );
 
         return () => { tl.kill(); };
-    }, []);
+    }, [isLoading]);
 
     return (
-        <div ref={heroRef} className="flex w-full h-[60lvh] lg:h-lvh! items-center justify-center lg:justify-end">
-            <img src={bgVideo} alt={title} className="absolute top-0 left-0 w-full h-[60lvh] lg:h-lvh z-[-1] brightness-50 object-cover" />
-            <div className="absolute top-0 left-0 w-full h-[60lvh] lg:h-lvh z-0 bg-[#00060A] opacity-60" />
+        <div ref={heroRef} className="flex w-full h-lvh items-center justify-center lg:justify-end">
+            <img src={bgVideo} alt={title} className="absolute top-0 left-0 w-full h-lvh z-[-1] brightness-50 object-cover" />
+            <div className="absolute top-0 left-0 w-full h-lvh z-0 bg-[#00060A] opacity-60" />
             <div className="mx-4 lg:mx-0 lg:mr-[10.63dvw] mt-0 lg:mt-[20lvh] z-1 flex flex-col items-center lg:items-end">
                 <h1 ref={titleRef} className="opacity-0 text-center lg:text-right">
                     <ScrollTextReveal progress={titleProgress}>
