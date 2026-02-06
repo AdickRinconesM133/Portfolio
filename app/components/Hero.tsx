@@ -49,7 +49,6 @@ const applyGroupProgress = (elements: Element[], progress: number) => {
 
 export const Hero = () => {
     const { isLoading } = useLoading();
-    const hasAnimated = useRef(false);
     const heroRef = useRef<HTMLDivElement>(null);
     const subtitleRef = useRef<HTMLParagraphElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
@@ -90,8 +89,7 @@ export const Hero = () => {
     }, [update]);
 
     useEffect(() => {
-        if (isLoading || hasAnimated.current) return;
-        hasAnimated.current = true;
+        if (isLoading) return;
 
         const targets = [
             subtitleRef.current,

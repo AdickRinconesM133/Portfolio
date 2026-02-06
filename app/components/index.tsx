@@ -12,3 +12,4 @@ export * from "./SmoothScroll";
 export * from "./ScrollCardReveal";
 export * from "./ScrollTriggerText";
 export * from "./LoadingScreen";
+export * from "./CustomCursor";

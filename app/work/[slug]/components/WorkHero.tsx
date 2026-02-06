@@ -51,7 +51,6 @@ interface WorkHeroProps {
 
 export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkHeroProps) => {
     const { isLoading } = useLoading();
-    const hasAnimated = useRef(false);
     const heroRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
     const techCardsRef = useRef<HTMLDivElement>(null);
@@ -82,8 +81,7 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
     }, [update]);
 
     useEffect(() => {
-        if (isLoading || hasAnimated.current) return;
-        hasAnimated.current = true;
+        if (isLoading) return;
 
         const targets = [
             titleRef.current,
@@ -108,9 +106,17 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
     }, [isLoading]);
 
     return (
-        <div ref={heroRef} className="flex w-full h-lvh items-center justify-center lg:justify-end">
-            <img src={bgVideo} alt={title} className="absolute top-0 left-0 w-full h-lvh z-[-1] brightness-50 object-cover" />
-            <div className="absolute top-0 left-0 w-full h-lvh z-0 bg-[#00060A] opacity-60" />
+        <div ref={heroRef} className="relative flex w-full h-lvh items-center justify-center lg:justify-end overflow-visible">
+            <div
+                className="absolute top-0 left-0 w-full h-[110lvh] z-0"
+                style={{
+                    maskImage: 'linear-gradient(to bottom, black 90%, transparent)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 90%, transparent)',
+                }}
+            >
+                <img src={bgVideo} alt={title} className="absolute inset-0 w-full h-full brightness-50 object-cover" />
+                <div className="absolute inset-0 bg-[#00060A] opacity-60" />
+            </div>
             <div className="mx-4 lg:mx-0 lg:mr-[10.63dvw] mt-0 lg:mt-[20lvh] z-1 flex flex-col items-center lg:items-end">
                 <h1 ref={titleRef} className="opacity-0 text-center lg:text-right">
                     <ScrollTextReveal progress={titleProgress}>

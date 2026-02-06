@@ -12,12 +12,10 @@ const MOBILE_BREAKPOINT = 1024;
 
 export const Work = () => {
     const { isLoading } = useLoading();
-    const hasAnimated = useRef(false);
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
-        if (isLoading || hasAnimated.current) return;
-        hasAnimated.current = true;
+        if (isLoading) return;
 
         const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
         const entryCount = isMobile ? works.length : 1;

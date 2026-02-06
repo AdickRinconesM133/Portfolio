@@ -19,7 +19,6 @@ const toProgress = (scrollRatio: number, [start, end]: readonly [number, number]
 
 export const WorkHeader = () => {
     const { isLoading } = useLoading();
-    const hasAnimated = useRef(false);
     const headerRef = useRef<HTMLDivElement>(null);
     const labelRef = useRef<HTMLParagraphElement>(null);
     const titleRef = useRef<HTMLHeadingElement>(null);
@@ -53,8 +52,7 @@ export const WorkHeader = () => {
     }, [update]);
 
     useEffect(() => {
-        if (isLoading || hasAnimated.current) return;
-        hasAnimated.current = true;
+        if (isLoading) return;
 
         const targets = [
             labelRef.current,

@@ -64,6 +64,12 @@ h3 {
   line-height: 0.9;
 }
 
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
 *::-webkit-scrollbar {
   display: none;
 }

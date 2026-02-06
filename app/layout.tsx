@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { League_Gothic } from "next/font/google";
 import localFont from "next/font/local";
-import { Background, LayoutContent, LoadingScreen, Navigation, SmoothScroll } from "./components/index";
+import { Background, CustomCursor, LayoutContent, LoadingScreen, Navigation, SmoothScroll } from "./components/index";
 import { MenuProvider } from "./context/MenuContext";
 import { LoadingProvider } from "./context/LoadingContext";
 import "./globals.css";
@@ -50,6 +50,7 @@ export default function RootLayout({
               <LayoutContent>{children}</LayoutContent>
             </SmoothScroll>
             <LoadingScreen />
+            <CustomCursor />
           </MenuProvider>
         </LoadingProvider>
       </body>

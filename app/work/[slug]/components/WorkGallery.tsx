@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import type { GalleryItem } from '@/app/data/works';
+import { ScrollCardReveal } from '@/app/components';
 
 interface WorkGalleryProps {
   slug: string;
@@ -154,7 +155,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
       return (
         <video
           ref={(el) => setVideoRef(index, el)}
-          className="w-full h-full object-cover rounded-3xl shadow-2xl pointer-events-none"
+          className="w-full h-full object-contain md:object-cover rounded-3xl shadow-2xl pointer-events-none"
           muted
           autoPlay={index === activeIndex}
           loop
@@ -170,7 +171,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
       <img
         src={item.url}
         alt="Gallery item"
-        className="w-full h-full object-cover rounded-3xl shadow-2xl pointer-events-none"
+        className="w-full h-full object-contain md:object-cover rounded-3xl shadow-2xl pointer-events-none"
         draggable={false}
       />
     );
@@ -180,28 +181,30 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
 
   return (
     <>
-      <div
-        ref={containerRef}
-        className="relative margin-top w-full h-[60lvh] md:h-[90lvh] overflow-hidden flex-center md:cursor-grab md:active:cursor-grabbing select-none md:touch-none pb-[15lvh] lg:pb-0"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-      >
-        {visibleIndices.map((index) => {
-          const item = getItem(index);
-          if (!item) return null;
+      <ScrollCardReveal start="top 95%" end="top 65%">
+        <div
+          ref={containerRef}
+          className="relative margin-top w-full h-[60lvh] md:h-[90lvh] overflow-hidden flex-center md:cursor-grab md:active:cursor-grabbing select-none md:touch-none pb-[15lvh] lg:pb-0"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+        >
+          {visibleIndices.map((index) => {
+            const item = getItem(index);
+            if (!item) return null;
 
-          return (
-            <div
-              key={index}
-              className="absolute w-[85%] md:w-[65%] h-[85%]"
-              style={getSlideStyle(index)}
-            >
-              {renderItem(item, index)}
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <div
+                key={index}
+                className="absolute w-[85%] md:w-[65%] h-[85%]"
+                style={getSlideStyle(index)}
+              >
+                {renderItem(item, index)}
+              </div>
+            );
+          })}
+        </div>
+      </ScrollCardReveal>
 
       {selectedItem && (
         <div
