@@ -23,7 +23,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
     async function fetchGallery() {
       try {
         const res = await fetch(`/api/gallery?folder=${encodeURIComponent(slug)}`);
-        const data = await res.json();
+        const data: { items?: GalleryItem[] } = await res.json();
         if (data.items) setItems(data.items);
       } catch (err) {
         console.error('Error fetching gallery:', err);
