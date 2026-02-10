@@ -1,6 +1,8 @@
+'use client';
+
 import { cn } from "@/app/lib/utils";
 import { TechCard } from "./TechCard";
-import Link from "next/link";
+import { TransitionLink } from "../TransitionLink";
 
 interface WorkCardProps {
   slug: string;
@@ -29,7 +31,7 @@ export const WorkCard = ({
 }: WorkCardProps) => {
   const mobileTechs = techsShort || techs;
   return (
-    <Link href={`/work/${slug}`} className="group">
+    <TransitionLink href={`/work/${slug}`} className="group">
       <div
         className={cn(
           "bg-background/40 rounded-[24px] flex items-center justify-start relative overflow-hidden",
@@ -38,12 +40,13 @@ export const WorkCard = ({
         )}
       >
         {bgVideo && (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={bgVideo}
             alt=""
             className="absolute inset-0 hidden md:block w-full h-full object-cover opacity-[0.01] group-hover:opacity-25 transition-opacity duration-500 z-0 pointer-events-none"
             style={{ willChange: "opacity" }}
-            loading="eager"
+            loading="lazy"
           />
         )}
         <div className="margin-left flex-1 flex items-center gap-3 md:gap-[3dvw] pr-4 md:pr-[3.33dvw] py-6 md:py-0 relative z-10">
@@ -124,6 +127,6 @@ export const WorkCard = ({
           </div>
         </div>
       </div>
-    </Link>
+    </TransitionLink>
   );
 };
