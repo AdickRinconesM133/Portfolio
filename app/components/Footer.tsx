@@ -2,7 +2,9 @@
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { SOCIAL_LINKS } from "@/app/data/social";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,15 +44,11 @@ export const Footer = () => {
                 <p>© 2026 ADICK RINCONES</p>
             </div>
             <div className="flex flex-row gap-3 md:gap-[2dvw]">
-                <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/linkedin.svg" alt="Linkedin" className="w-[2dvw] h-[2dvw] min-w-5 min-h-5 brightness-1000" />
-                </a>
-                <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/instagram.svg" alt="Instagram" className="w-[2dvw] h-[2dvw] min-w-5 min-h-5 brightness-1000" />
-                </a>
-                <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/github.svg" alt="Github" className="w-[2dvw] h-[2dvw] min-w-5 min-h-5 brightness-1000" />
-                </a>
+                {SOCIAL_LINKS.map((link) => (
+                    <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                        <Image src={link.icon} alt={link.label} width={20} height={20} className="w-[2dvw] h-[2dvw] min-w-5 min-h-5 brightness-1000" />
+                    </a>
+                ))}
             </div>
         </div>
     )

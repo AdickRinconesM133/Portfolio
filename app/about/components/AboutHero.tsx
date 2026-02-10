@@ -36,14 +36,14 @@ export const AboutHero = () => {
                     <ScrollTextReveal progress={progresses.name} className="text-accent">RINCONES</ScrollTextReveal>
                 </h2>
                 <p ref={taglineRef} className="opacity-0 text-accent text-[0.55rem] lg:text-xl mt-2 lg:mt-[4lvh]">
-                    <ScrollTextReveal progress={progresses.tagline}>LET'S BUILD SOMETHING THAT MATTERS</ScrollTextReveal>
+                    <ScrollTextReveal progress={progresses.tagline}>BASED IN BUENOS AIRES, ARGENTINA</ScrollTextReveal>
                 </p>
             </div>
             <div ref={cardSectionRef} className="opacity-0 ml-4 md:ml-[6.67dvw] margin-right mt-2 lg:mt-[4lvh]">
                 <ScrollCardReveal start="top 98%" end="top 85%">
                     <Card className="w-full h-auto lg:w-[50dvw] py-8 md:py-[4lvh]">
-                        <p className="text-[0.65rem] md:text-[0.8rem] margin-left mr-[3.33dvw]">Hi, I'm Adick - a Software Engineer building scalable systems across mobile, backend, and cloud!</p>
-                        <p className="text-[0.65rem] md:text-[0.8rem] mt-[4lvh] margin-left mr-[3.33dvw]">5+ years of experience with Next.js, React, Rust, and Golang. From ride-sharing platforms serving 100K+ users to AAA game development in Unreal Engine, I build systems designed for real-world scale. Mentored by a senior Apple engineer on production-grade architecture and system design patterns.</p>
+                        <p className="text-[0.65rem] md:text-[0.8rem] margin-left mr-[3.33dvw]">Hi, I&apos;m Adick - a Software Engineer building scalable systems across mobile, backend, and cloud!</p>
+                        <p className="text-[0.65rem] md:text-[0.8rem] mt-[4lvh] margin-left mr-[3.33dvw]">5+ years of experience with Next.js, React, Rust, and Golang. From ride-sharing platforms serving 100K+ users to production-grade cloud systems, I build systems designed for real-world scale. Mentored by a senior Apple engineer on production-grade architecture and system design patterns.</p>
                     </Card>
                 </ScrollCardReveal>
             </div>

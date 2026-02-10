@@ -6,6 +6,7 @@ import { ScrollTextReveal } from "./ScrollTextReveal";
 import { useLoading } from "@/app/context/LoadingContext";
 import { applyGroupProgress } from "@/app/lib/animation";
 import { useScrollProgress, useEntryTimeline } from "@/app/hooks";
+import { SOCIAL_LINKS } from "@/app/data/social";
 
 
 const RANGES = {
@@ -75,33 +76,11 @@ export const Hero = () => {
                     <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">AWS</li>
                 </ul>
                 <div ref={iconsRef} className="opacity-0 flex flex-wrap justify-center lg:justify-end gap-x-3 md:gap-x-[1.75dvw]">
-                    <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
-                        <Image
-                            className="w-[2.2dvw] h-[2.2dvw] min-w-4 min-h-4"
-                            src="/images/linkedin.svg"
-                            alt="Linkedin"
-                            width={20}
-                            height={20}
-                        />
-                    </a>
-                    <a href="https://instagram.com/kyddahh/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
-                        <Image
-                            className="w-[2.2dvw] h-[2.2dvw] min-w-4 min-h-4"
-                            src="/images/instagram.svg"
-                            alt="Instagram"
-                            width={20}
-                            height={20}
-                        />
-                    </a>
-                    <a href="https://github.com/AdickRinconesM133" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
-                        <Image
-                            className="w-[2.2dvw] h-[2.2dvw] min-w-4 min-h-4"
-                            src="/images/github.svg"
-                            alt="Github"
-                            width={20}
-                            height={20}
-                        />
-                    </a>
+                    {SOCIAL_LINKS.map((link) => (
+                        <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">
+                            <Image className="w-[2.2dvw] h-[2.2dvw] min-w-4 min-h-4" src={link.icon} alt={link.label} width={20} height={20} />
+                        </a>
+                    ))}
                 </div>
             </div>
         </div>
