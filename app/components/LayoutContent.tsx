@@ -7,8 +7,8 @@ export const LayoutContent = ({ children }: { children: ReactNode }) => {
     const { isMenuOpen } = useMenu();
 
     return (
-        <div className={isMenuOpen ? 'invisible pointer-events-none' : ''}>
+        <main id="main-content" className={isMenuOpen ? 'invisible pointer-events-none' : ''}>
             {children}
-        </div>
+        </main>
     );
 };

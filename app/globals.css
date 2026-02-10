@@ -11,10 +11,10 @@
   --font-league-gothic: var(--font-league-gothic);
   --font-neuemontreal: var(--font-neuemontreal);
 
-  --color-primary: #3555B8;
+  --color-primary: #5078DC;
   --color-secondary: #011F76;
   --color-text: #F7FFF7;
-  --color-accent: #3555B8;
+  --color-accent: #5078DC;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -77,6 +77,16 @@ h3 {
 * {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline-offset: 0;
 }
 
 @utility absolute-center {

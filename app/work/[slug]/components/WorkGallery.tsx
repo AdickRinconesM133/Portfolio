@@ -120,7 +120,10 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
   useEffect(() => {
     if (!selectedItem) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'Escape') {
+        setSelectedItem(null);
+        startAutoPlay();
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -168,6 +171,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
     }
 
     return (
+      /* eslint-disable-next-line @next/next/no-img-element */
       <img
         src={item.url}
         alt="Gallery item"
@@ -189,6 +193,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
         >
+          {/* eslint-disable-next-line react-hooks/refs */}
           {visibleIndices.map((index) => {
             const item = getItem(index);
             if (!item) return null;
@@ -208,6 +213,9 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
 
       {selectedItem && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Gallery lightbox"
           className="fixed inset-0 z-[110] p-2 md:p-[2dvw] cursor-pointer"
           onClick={closeLightbox}
         >
@@ -223,6 +231,7 @@ export const WorkGallery = ({ slug }: WorkGalleryProps) => {
                 <source src={selectedItem.url} />
               </video>
             ) : (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={selectedItem.url}
                 alt="Gallery item fullscreen"

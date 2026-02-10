@@ -115,7 +115,7 @@ export const ContactHero = () => {
           <ScrollTextReveal progress={progresses.title} className="text-accent">PROJECT?</ScrollTextReveal>
         </h2>
         <p ref={subtitleRef} className="opacity-0 text-[0.55rem] lg:text-[0.8rem] mt-2 lg:mt-[4lvh] text-accent uppercase">
-          <ScrollTextReveal progress={progresses.subtitle}>Tell me about your vision, and I'll help you bring it to life.</ScrollTextReveal>
+          <ScrollTextReveal progress={progresses.subtitle}>Tell me about your vision, and I&apos;ll help you bring it to life.</ScrollTextReveal>
         </p>
       </div>
       <div ref={formSectionRef} className="opacity-0 margin-top ml-4 md:ml-[10.63dvw] mr-4 md:mr-0 flex flex-col md:flex-row gap-6 md:gap-x-[4dvw]">
@@ -155,6 +155,11 @@ export const ContactHero = () => {
                 </div>
               </div>
             ))}
+            <div aria-live="polite" className="sr-only">
+              {status === FORM_STATUS.SENDING && 'Sending your message...'}
+              {status === FORM_STATUS.SUCCESS && 'Message sent successfully!'}
+              {status === FORM_STATUS.ERROR && 'Failed to send message. Please try again.'}
+            </div>
             <button
               type="submit"
               disabled={isSending}
