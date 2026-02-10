@@ -4,28 +4,28 @@ import { ScrollCardReveal } from "@/app/components";
 export const AboutStack = () => {
   const skillCategories = [
     {
-      title: "BACKEND",
-      skills: ["RUST", "GOLANG", "PYTHON"],
-    },
-    {
-      title: "INFRASTRUCTURE",
-      skills: ["CI/CD", "DOCKER", "AWS", "KUBERNETES"],
-    },
-    {
-      title: "SPECIALITIES",
-      skills: ["API DESIGN", "SYSTEM DESIGN", "AI & AUTOMATION", "PIPELINES"],
-    },
-    {
       title: "FRONTEND",
-      skills: ["REACT.JS", "NEXT.JS", "TYPESCRIPT"],
+      skills: ["REACT", "NEXT.JS", "TYPESCRIPT", "REACT NATIVE", "EXPO"],
+    },
+    {
+      title: "BACKEND",
+      skills: ["RUST", "NODE.JS", "GOLANG"],
     },
     {
       title: "DATABASE",
-      skills: ["MYSQL", "MONGODB", "POSTGRESQL"],
+      skills: ["MONGODB", "POSTGRESQL", "MYSQL"],
+    },
+    {
+      title: "CLOUD & DEVOPS",
+      skills: ["DOCKER", "AWS", "CI/CD", "GNU/LINUX"],
+    },
+    {
+      title: "SPECIALITIES",
+      skills: ["MICROSERVICES", "EVENT-DRIVEN ARCHITECTURE", "SYSTEM DESIGN", "API DESIGN"],
     },
     {
       title: "TOOLS",
-      skills: ["GIT", "GITHUB", "TRELLO", "FIGMA"],
+      skills: ["GIT", "FIREBASE", "OPENTELEMETRY", "GRAFANA"],
     },
   ];
 

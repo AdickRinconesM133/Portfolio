@@ -12,7 +12,7 @@ export const About = () => {
                         <p className="text-accent text-[0.55rem] lg:text-xl">ABOUT ME</p>
                         <h2 className="mt-2 lg:mt-[4lvh]">ADICK <span className="text-accent">RINCONES</span></h2>
                         <p className="text-accent text-[0.55rem] lg:text-xl mt-2 lg:mt-[4lvh]">LET'S BUILD SOMETHING THAT MATTERS</p>
-                        <p className="text-[0.65rem] md:text-[0.8rem] mt-4 lg:mt-[4lvh]">Software Engineer specializing in Backend Development and Cloud Solutions. Focused on building robust, scalable systems that transform complex business needs into reliable, high-performance applications.</p>
+                        <p className="text-[0.65rem] md:text-[0.8rem] mt-4 lg:mt-[4lvh]">Software Engineer with 5+ years building scalable systems with Next.js, React, and Rust. Specialized in modern frontend architecture, event-driven microservices, and production-grade backend systems.</p>
                         <Link href="/about">
                             <p className="mt-4 lg:mt-[4lvh] text-[0.65rem] md:text-[0.8rem]! border border-accent rounded-full px-3 py-1.5 md:px-[0.8vw] md:py-[0.8vh] w-fit">LEARN MORE ABOUT ME</p>
                         </Link>

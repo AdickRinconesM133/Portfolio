@@ -67,12 +67,12 @@ export const Hero = () => {
                 </h3>
                 <ul ref={techListRef} className="opacity-0 flex flex-wrap mt-2 mb-3 lg:mt-[4lvh] lg:mb-[5lvh] justify-center lg:justify-end gap-x-3 md:gap-x-[1.88dvw]">
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">NEXT.JS</li>
+                    <li className="text-accent text-[0.55rem] lg:text-s text-right">REACT</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">RUST</li>
-                    <li className="text-accent text-[0.55rem] lg:text-s text-right">PYTHON</li>
+                    <li className="text-accent text-[0.55rem] lg:text-s text-right">TYPESCRIPT</li>
                     <li className="text-accent text-[0.55rem] lg:text-s text-right">GOLANG</li>
-                    <li className="text-accent text-[0.55rem] lg:text-s text-right">AWS</li>
-                    <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">KUBERNETES</li>
                     <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">DOCKER</li>
+                    <li className="hidden md:list-item text-accent text-[0.55rem] lg:text-s text-right">AWS</li>
                 </ul>
                 <div ref={iconsRef} className="opacity-0 flex flex-wrap justify-center lg:justify-end gap-x-3 md:gap-x-[1.75dvw]">
                     <a href="https://linkedin.com/in/adickrincones/" target="_blank" rel="noopener noreferrer" className="flex-center w-[4.1dvw] h-[4.1dvw] min-w-8 min-h-8 rounded-full border-accent border">

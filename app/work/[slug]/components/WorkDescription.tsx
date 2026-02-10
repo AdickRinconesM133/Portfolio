@@ -7,6 +7,7 @@ interface WorkDescriptionProps {
   title: string;
   title2?: string;
   description: string;
+  contribution: string;
   techDescription: string;
   role: string;
   period: string;
@@ -21,6 +22,7 @@ export const WorkDescription = ({
   title,
   title2,
   description,
+  contribution,
   techDescription,
   role,
   period,
@@ -51,6 +53,16 @@ export const WorkDescription = ({
                 </p>
                 <p className="margin-left mr-[3.33dvw] text-[0.65rem] md:text-[0.8rem] mt-[2lvh]">
                   {description}
+                </p>
+              </Card>
+            </ScrollCardReveal>
+            <ScrollCardReveal>
+              <Card className="w-[93.44dvw] lg:w-[40.5dvw]! h-auto py-8 md:py-[4lvh]">
+                <p className="margin-left mr-[3.33dvw] text-[0.9rem] text-accent">
+                  MY CONTRIBUTION
+                </p>
+                <p className="margin-left mr-[3.33dvw] text-[0.65rem] md:text-[0.8rem] mt-[2lvh]">
+                  {contribution}
                 </p>
               </Card>
             </ScrollCardReveal>

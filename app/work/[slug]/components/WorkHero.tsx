@@ -47,7 +47,7 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
                     WebkitMaskImage: 'linear-gradient(to bottom, black 90%, transparent)',
                 }}
             >
-                <img src={bgVideo} alt={title} className="absolute inset-0 w-full h-full brightness-50 object-cover" />
+                {bgVideo && <img src={bgVideo} alt={title} className="absolute inset-0 w-full h-full brightness-50 object-cover" />}
                 <div className="absolute inset-0 bg-[#00060A] opacity-60" />
             </div>
             <div className="mx-4 lg:mx-0 lg:mr-[10.63dvw] mt-0 lg:mt-[20lvh] z-1 flex flex-col items-center lg:items-end">

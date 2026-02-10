@@ -42,8 +42,8 @@ export const AboutHero = () => {
             <div ref={cardSectionRef} className="opacity-0 ml-4 md:ml-[6.67dvw] margin-right mt-2 lg:mt-[4lvh]">
                 <ScrollCardReveal start="top 98%" end="top 85%">
                     <Card className="w-full h-auto lg:w-[50dvw] py-8 md:py-[4lvh]">
-                        <p className="text-[0.65rem] md:text-[0.8rem] margin-left mr-[3.33dvw]">Hi, I'm Adick - a Software Engineer specializing in Backend Development & Cloud Solutions!</p>
-                        <p className="text-[0.65rem] md:text-[0.8rem] mt-[4lvh] margin-left mr-[3.33dvw]">Full Stack Developer with 5+ years in Rust and React Native. Microservices, cross-platform applications, and systems for millions of users. Experience with event-driven architecture, Docker, and distributed observability.</p>
+                        <p className="text-[0.65rem] md:text-[0.8rem] margin-left mr-[3.33dvw]">Hi, I'm Adick - a Software Engineer building scalable systems across mobile, backend, and cloud!</p>
+                        <p className="text-[0.65rem] md:text-[0.8rem] mt-[4lvh] margin-left mr-[3.33dvw]">5+ years of experience with Next.js, React, Rust, and Golang. From ride-sharing platforms serving 100K+ users to AAA game development in Unreal Engine, I build systems designed for real-world scale. Mentored by a senior Apple engineer on production-grade architecture and system design patterns.</p>
                     </Card>
                 </ScrollCardReveal>
             </div>
