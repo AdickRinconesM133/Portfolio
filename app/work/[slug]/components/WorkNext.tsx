@@ -13,7 +13,8 @@ interface WorkNextProps {
     techsShort?: string[]
 }
 
-export const WorkNext = ({ slug, number, title, title2, hint, bgVideo, image, techs, techsShort }: WorkNextProps) => {
+export const WorkNext = (props: WorkNextProps) => {
+    const { slug, number, title, title2, hint, bgVideo, image, techs, techsShort } = props;
     return (
         <div className="flex w-full flex-col pb-[15lvh] lg:pb-[6lvh]">
             <ScrollCardReveal className="margin-top margin-left margin-right">

@@ -59,7 +59,7 @@ export const ScrollCardReveal = ({ children, className = '', start = 'top 90%', 
         }, elRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [start, end, leaveStart, leaveEnd]);
 
     return (
         <div ref={elRef} className={className}>

@@ -16,20 +16,18 @@ interface WorkDescriptionProps {
   techs: string[];
 }
 
-export const WorkDescription = ({
-  slug,
-  number,
-  title,
-  title2,
-  description,
-  contribution,
-  techDescription,
-  role,
-  period,
-  services,
-  image,
-  techs,
-}: WorkDescriptionProps) => {
+export const WorkDescription = (props: WorkDescriptionProps) => {
+  const {
+    number,
+    title,
+    title2,
+    description,
+    contribution,
+    techDescription,
+    role,
+    period,
+    services,
+  } = props;
   return (
     <div className="flex flex-col md:flex-row w-full pb-[15lvh] lg:pb-0">
       <div className="flex justify-center items-center margin-left h-auto md:h-lvh">

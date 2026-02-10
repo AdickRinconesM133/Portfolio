@@ -7,7 +7,7 @@ const IMAGE_EXTENSIONS = /\.(webp|jpg|jpeg|png|avif|gif)$/i
 const VIDEO_EXTENSIONS = /\.(mp4|webm|mov)$/i
 
 interface CloudflareEnv {
-    portfolio: any
+    portfolio: R2Bucket
 }
 
 interface GalleryItem {
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
         const listing = await bucket.list({ prefix: `${folder}/` })
 
         const items: GalleryItem[] = listing.objects
-            .map((obj: any) => {
+            .map((obj: R2Object) => {
                 const key = obj.key as string
                 const filename = key.split('/').pop() ?? ''
 

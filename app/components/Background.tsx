@@ -48,7 +48,7 @@ export const Background = () => {
     return (
         <div className="fixed bg-black w-full h-lvh z-[-1] overflow-hidden">
             <div className="absolute top-[30lvh] md:top-[55lvh] w-full h-lvh flex flex-col justify-center blur-[120px]">
-                <div ref={vectorBRef} className="absolute w-full h-lvh">
+                <div ref={vectorBRef} className="absolute w-full h-lvh will-change-transform">
                     <Image
                         className="w-full h-lvh"
                         src="/images/vector_b.webp"
@@ -57,7 +57,7 @@ export const Background = () => {
                         height={1080}
                     />
                 </div>
-                <div ref={vectorFRef} className="absolute w-full h-[50lvh] top-[30lvh]">
+                <div ref={vectorFRef} className="absolute w-full h-[50lvh] top-[30lvh] will-change-transform">
                     <Image
                         className="w-full h-[50lvh]"
                         src="/images/vector_f.webp"
@@ -67,8 +67,8 @@ export const Background = () => {
                     />
                 </div>
             </div>
-            <div ref={circle1Ref} className="absolute bg-secondary rounded-full blur-[280px] w-[40dvw] md:w-[20dvw] h-[40dvw] md:h-[20dvw] top-[15lvh] left-[7dvw]"></div>
-            <div ref={circle2Ref} className="absolute bg-secondary rounded-full blur-[280px] w-[40dvw] md:w-[20dvw] h-[40dvw] md:h-[20dvw] top-[50lvh] right-[15dvw]"></div>
+            <div ref={circle1Ref} className="absolute bg-secondary rounded-full blur-[280px] w-[40dvw] md:w-[20dvw] h-[40dvw] md:h-[20dvw] top-[15lvh] left-[7dvw] will-change-transform"></div>
+            <div ref={circle2Ref} className="absolute bg-secondary rounded-full blur-[280px] w-[40dvw] md:w-[20dvw] h-[40dvw] md:h-[20dvw] top-[50lvh] right-[15dvw] will-change-transform"></div>
         </div>
     )
 }

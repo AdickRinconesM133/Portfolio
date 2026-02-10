@@ -47,6 +47,7 @@ export const WorkHero = ({ title, title2, bgVideo, techIcons, techNames }: WorkH
                     WebkitMaskImage: 'linear-gradient(to bottom, black 90%, transparent)',
                 }}
             >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 {bgVideo && <img src={bgVideo} alt={title} className="absolute inset-0 w-full h-full brightness-50 object-cover" />}
                 <div className="absolute inset-0 bg-[#00060A] opacity-60" />
             </div>

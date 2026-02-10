@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 export const runtime = 'edge'
 
 interface CloudflareEnv {
-    portfolio: any
+    portfolio: R2Bucket
 }
 
 export async function GET(request: NextRequest) {

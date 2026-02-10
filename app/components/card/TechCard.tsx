@@ -11,6 +11,7 @@ export const TechCard = ({ image, title, size = "md" }: TechCardProps) => {
                 ? "gap-1 px-2 py-0.5"
                 : "gap-1 md:gap-[0.5dvw] px-2 py-1 md:px-[0.8dvw] md:py-[0.8lvh]"
         }`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
                 src={image}
                 alt={title}

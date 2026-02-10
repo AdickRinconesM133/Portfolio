@@ -9,7 +9,10 @@ export function useEntryTimeline(
   isLoading: boolean,
 ): void {
   const refsRef = useRef(refs);
-  refsRef.current = refs;
+
+  useEffect(() => {
+    refsRef.current = refs;
+  });
 
   useEffect(() => {
     if (isLoading) return;
