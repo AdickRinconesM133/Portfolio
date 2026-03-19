@@ -15,12 +15,12 @@ const league_gothic = League_Gothic({
 const neuemontreal = localFont({
   src: [
     {
-      path: "./fonts/ppneuemontreal-medium.woff2",
-      weight: "500",
+      path: "./fonts/Montreal-Regular.ttf",
+      weight: "400",
       style: "normal",
     },
     {
-      path: "./fonts/ppneuemontreal-bold.woff2",
+      path: "./fonts/Montreal-Bold.ttf",
       weight: "700",
       style: "normal",
     }
