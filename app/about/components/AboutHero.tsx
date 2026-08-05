@@ -36,7 +36,7 @@ export const AboutHero = () => {
                     <ScrollTextReveal progress={progresses.name} className="text-accent">RINCONES</ScrollTextReveal>
                 </h2>
                 <p ref={taglineRef} className="opacity-0 text-accent text-[0.55rem] lg:text-xl mt-2 lg:mt-[4lvh]">
-                    <ScrollTextReveal progress={progresses.tagline}>BASED IN BUENOS AIRES, ARGENTINA</ScrollTextReveal>
+                    <ScrollTextReveal progress={progresses.tagline}>BASED IN LARA, VENEZUELA</ScrollTextReveal>
                 </p>
             </div>
             <div ref={cardSectionRef} className="opacity-0 ml-4 md:ml-[6.67dvw] margin-right mt-2 lg:mt-[4lvh]">
